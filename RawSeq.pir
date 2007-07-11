@@ -2,9 +2,12 @@
 # A structure for maintaining the information about a single
 # molecular sequence that is part of a RawDiskSeqs collection
 #
-#    $Id: RawSeq.pir,v 1.1 2007/07/11 19:55:18 riouxp Exp $
+#    $Id: RawSeq.pir,v 1.2 2007/07/11 22:08:27 riouxp Exp $
 #
 #    $Log: RawSeq.pir,v $
+#    Revision 1.2  2007/07/11 22:08:27  riouxp
+#    Fixed bug with empty internal elements.
+#
 #    Revision 1.1  2007/07/11 19:55:18  riouxp
 #    New project. Initial check-in.
 #
@@ -43,7 +46,7 @@ sub GetSubseq {
     my $class    = ref($self);
 
     die "This is an instance method.\n"  unless $class;
-    die "Error: len must be positive.\n" unless $len > 0;
+    die "Error: len must be positive.\n" unless $len >= 0;
 
     my $fh = $self->{'_tiedFh_'};
     die "Object not yet tied to a file on disk?!?\n" unless $fh;
@@ -57,6 +60,8 @@ sub GetSubseq {
     if ($start+$len > $rawlen) {
         die "Error: with start '$start', length '$len' is outside of sequence boundaries 0 .. " . ($rawlen-1) . "\n";
     }
+
+    return "" if $len == 0;
 
     my $realstart = $rawstart+$start;
     my $subseq = "";

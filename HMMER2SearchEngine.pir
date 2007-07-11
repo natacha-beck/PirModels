@@ -1,9 +1,12 @@
 #
 # Implements SearchEngine for HMMER2
 #
-#    $Id: HMMER2SearchEngine.pir,v 1.1 2007/07/11 19:55:17 riouxp Exp $
+#    $Id: HMMER2SearchEngine.pir,v 1.2 2007/07/11 22:08:27 riouxp Exp $
 #
 #    $Log: HMMER2SearchEngine.pir,v $
+#    Revision 1.2  2007/07/11 22:08:27  riouxp
+#    Fixed bug with empty internal elements.
+#
 #    Revision 1.1  2007/07/11 19:55:17  riouxp
 #    New project. Initial check-in.
 #
@@ -59,7 +62,7 @@ sub PrepareElementSearch {
         # Build HMM with HMMER2
         my $HMMfile = "P-$id.hmm";
         print STDERR "Debug: building $HMMfile...\n" if $self->get_debug();
-        system("cd $tmpdir || exit;hmmbuild -f  $HMMfile $fa_file >out.$id.hbui 2>&1");
+        system("cd $tmpdir || exit;hmmbuild -g  $HMMfile $fa_file >out.$id.hbui 2>&1");
         # Calibrate HMM
         system("cd $tmpdir || exit;hmmcalibrate $HMMfile          >out.$id.hcal 2>&1");
 
