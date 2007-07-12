@@ -2,9 +2,13 @@
 # Represents the raw information about a search engine's
 # hit to a molecular sequence.
 #
-#    $Id: SimpleHit.pir,v 1.1 2007/07/11 19:55:18 riouxp Exp $
+#    $Id: SimpleHit.pir,v 1.2 2007/07/12 20:21:49 riouxp Exp $
 #
 #    $Log: SimpleHit.pir,v $
+#    Revision 1.2  2007/07/12 20:21:49  riouxp
+#    Added field for storing the exact alignment as reported
+#    by the search engine.
+#
 #    Revision 1.1  2007/07/11 19:55:18  riouxp
 #    New project. Initial check-in.
 #
@@ -25,6 +29,7 @@ targetId                single          string
 hitStart                single          int4            Convention: start < stop always
 hitStop                 single          int4
 hitStrand               single          string          "+" or "-"
+hitAlign                single          string          E.g. "AAGTCG--TGATG--AG"
 hitScore                single          string
 hitEvalue               single          string
 
