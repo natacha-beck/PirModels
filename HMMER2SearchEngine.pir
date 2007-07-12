@@ -1,9 +1,12 @@
 #
 # Implements SearchEngine for HMMER2
 #
-#    $Id: HMMER2SearchEngine.pir,v 1.3 2007/07/12 20:22:46 riouxp Exp $
+#    $Id: HMMER2SearchEngine.pir,v 1.4 2007/07/12 23:01:18 riouxp Exp $
 #
 #    $Log: HMMER2SearchEngine.pir,v $
+#    Revision 1.4  2007/07/12 23:01:18  riouxp
+#    Fixed bug with HMMbuild options.
+#
 #    Revision 1.3  2007/07/12 20:22:46  riouxp
 #    Added new output parser that extract the alignment sequences.
 #    Added options to hmmbuild to make sure all columns supplied
@@ -55,6 +58,7 @@ sub PrepareElementSearch {
     die "ID must be an alphanum sequence.\n" unless $id =~ m#^\w[\w\.\-\+]*$#;
 
     my $token = "";
+    my $HMMbuildOpts = "--fast --gapmax 1";
 
     # Build model for PLUS strand
     if ($forstrand ne "-") { # we do the test this way so we can build both + and - models
@@ -67,9 +71,9 @@ sub PrepareElementSearch {
         # Build HMM with HMMER2
         my $HMMfile = "P-$id.hmm";
         print STDERR "Debug: building $HMMfile...\n" if $self->get_debug();
-        system("cd $tmpdir || exit;hmmbuild -g --fast --gapmax 1 $HMMfile $fa_file >out.$id.hbui 2>&1");
+        system("cd $tmpdir || exit;hmmbuild $HMMbuildOpts $HMMfile $fa_file >out.$id.hbui 2>&1");
         # Calibrate HMM
-        system("cd $tmpdir || exit;hmmcalibrate $HMMfile                           >out.$id.hcal 2>&1");
+        system("cd $tmpdir || exit;hmmcalibrate $HMMfile                    >out.$id.hcal 2>&1");
 
         my $tmpfiles = $self->get_tmpfiles();
         push(@$tmpfiles, $fa_file, $HMMfile, "out.$id.hbui", "out.$id.hcal");
@@ -89,9 +93,9 @@ sub PrepareElementSearch {
         # Build HMM with HMMER2
         my $HMMfile = "M-$id.hmm";
         print STDERR "Debug: building $HMMfile...\n" if $self->get_debug();
-        system("cd $tmpdir || exit;hmmbuild -f  $HMMfile $fa_file >out.$id.hbui 2>&1");
+        system("cd $tmpdir || exit;hmmbuild $HMMbuildOpts $HMMfile $fa_file >out.$id.hbui 2>&1");
         # Calibrate HMM
-        system("cd $tmpdir || exit;hmmcalibrate $HMMfile          >out.$id.hcal 2>&1");
+        system("cd $tmpdir || exit;hmmcalibrate $HMMfile                    >out.$id.hcal 2>&1");
 
         my $tmpfiles = $self->get_tmpfiles();
         push(@$tmpfiles, $fa_file, $HMMfile, "out.$id.hbui", "out.$id.hcal");
