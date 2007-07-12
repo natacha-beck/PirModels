@@ -1,9 +1,14 @@
 #
 # Implements SearchEngine for HMMER2
 #
-#    $Id: HMMER2SearchEngine.pir,v 1.2 2007/07/11 22:08:27 riouxp Exp $
+#    $Id: HMMER2SearchEngine.pir,v 1.3 2007/07/12 20:22:46 riouxp Exp $
 #
 #    $Log: HMMER2SearchEngine.pir,v $
+#    Revision 1.3  2007/07/12 20:22:46  riouxp
+#    Added new output parser that extract the alignment sequences.
+#    Added options to hmmbuild to make sure all columns supplied
+#    are considered significant (--fast --gapmax 1).
+#
 #    Revision 1.2  2007/07/11 22:08:27  riouxp
 #    Fixed bug with empty internal elements.
 #
@@ -62,9 +67,9 @@ sub PrepareElementSearch {
         # Build HMM with HMMER2
         my $HMMfile = "P-$id.hmm";
         print STDERR "Debug: building $HMMfile...\n" if $self->get_debug();
-        system("cd $tmpdir || exit;hmmbuild -g  $HMMfile $fa_file >out.$id.hbui 2>&1");
+        system("cd $tmpdir || exit;hmmbuild -g --fast --gapmax 1 $HMMfile $fa_file >out.$id.hbui 2>&1");
         # Calibrate HMM
-        system("cd $tmpdir || exit;hmmcalibrate $HMMfile          >out.$id.hcal 2>&1");
+        system("cd $tmpdir || exit;hmmcalibrate $HMMfile                           >out.$id.hcal 2>&1");
 
         my $tmpfiles = $self->get_tmpfiles();
         push(@$tmpfiles, $fa_file, $HMMfile, "out.$id.hbui", "out.$id.hcal");
@@ -147,27 +152,59 @@ sub SearchSequences {
     $finalhitObj;
 }
 
+
+#SR0x00ba: domain 1 of 1, from 9766 to 9824: score -32.4, E = 7.3
+#                   *->g.acgAAagcatggggAgcaAacagGATTaGatACCctggTAgtcca
+#                      +  c AA+g++t   +A  aAa  g A T Gat C  t  TAg   a
+#    SR0x00ba  9766    AaTCAAAGGTTT---TATGAAATCGAAATCGATTCTTTTTTAG---A 9806
+#
+#                   tgccgtaAAcgaTgaatg<-*
+#                   t+ c   A  gaTg atg
+#    SR0x00ba  9807 TATCTGGATAGATGGATG    9824
+#
+#SR0x00bb: domain 1 of 1, from 9766 to 9824: score -32.4, E = 7.3
+
 sub _ParseHMMSearchResult { # Not a complete importer; not a method
     my $txt  = shift;  # text array ref
 
     my $hitlist = [];
 
-    shift (@$txt) while @$txt && $txt->[0] !~ m#^Sequence Domain  seq-f seq-t#;
-    shift (@$txt); shift(@$txt); # header line, dash line
-    
-    while (@$txt && $txt->[0] !~ m#^\s*$#) {
-        my $line = shift(@$txt);
-        $line =~ s/\s*$//;
-        my @comps = split(/\s+/,$line);
-        my ($targetID,$domain,$from,$to) = @comps; # first 4 components
+    while (@$txt) {
+
+        # Discard everything until "SR0x00ba: domain 1 of 1, from 9766 to"...
+        shift(@$txt)
+            while @$txt &&
+            $txt->[0] !~ m#^\s*(\S+)\s*:\s*domain\s*\d+\s*of\s*\d+,\s*from\s*(\d+)\s*to\s*(\d+).*score\s*(\S+),\s*E\s*=\s*(\S+)#;
+        last unless @$txt;
+        my ($targetID,$from,$to,$score,$evalue) = ($1,$2,$3,$4,$5);
+        shift(@$txt);
+
+        # Extract alignment paragraph
+        my @paragraph=();
+        push(@paragraph,shift(@$txt))
+            while @$txt && 
+            $txt->[0] !~ m#domain\s*\d+\s*of\s*\d+|^Histogram|^% Statistical|^Total sequences#;
+
+        # Extract aligned sequence from paragraph
+        my $align = "";
+        foreach my $paraline (@paragraph) {
+           next unless $paraline =~ m#\d+\s*$# &&   # ends with a number
+                       index($paraline,$targetID) >= 0;
+           my ($subseq) = ($paraline =~ m#([^\s\d]+)\s*\d+\s*$#);
+           $align .= $subseq;
+        }
+
+        die "No align?!?\nPARA=\n" . join("",@paragraph) . "REST=\n" . join("",@$txt) . "---\n"
+            if $align eq "";
+
         $from--; $to--;  # converted to ZERO base
-        my ($score,$evalue) = ($comps[-2],$comps[-1]); # last 2 components
+
         my $obj = new PirObject::SimpleHit(
             targetId  => $targetID,
             hitStart  => $from,
             hitStop   => $to,
-            hitStrand => "+",  # HMMSearch is + strand only
-            #hitSeq    => "",  # not filled in yet
+            hitStrand => "+",  # HMMSearch for HMMER2 is + strand only
+            hitAlign  => $align,
             hitScore  => $score,
             hitEvalue => $evalue,
         );
