@@ -1,9 +1,12 @@
 #
 # A structure for maintaining a potential result
 #
-#    $Id: PotentialResult.pir,v 1.1 2007/07/11 19:55:18 riouxp Exp $
+#    $Id: PotentialResult.pir,v 1.2 2007/07/12 20:21:24 riouxp Exp $
 #
 #    $Log: PotentialResult.pir,v $
+#    Revision 1.2  2007/07/12 20:21:24  riouxp
+#    Added field for FASTA reporting.
+#
 #    Revision 1.1  2007/07/11 19:55:18  riouxp
 #    New project. Initial check-in.
 #
@@ -22,6 +25,7 @@
 #---------------------- ---------------	---------------	-----------------------
 sequenceId              single          string
 sequenceName            single          string
+resultNumber            single          string          e.g. "2/4" meaning '2 of 4'
 solutionStrand          single          string          "+" or "-"
 numMatches              single          int4
 combinedscore           single          string
