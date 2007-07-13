@@ -2,9 +2,12 @@
 # A structure for maintaining the information about a single
 # molecular sequence that is part of a RawDiskSeqs collection
 #
-#    $Id: RawSeq.pir,v 1.2 2007/07/11 22:08:27 riouxp Exp $
+#    $Id: RawSeq.pir,v 1.3 2007/07/13 20:48:59 riouxp Exp $
 #
 #    $Log: RawSeq.pir,v $
+#    Revision 1.3  2007/07/13 20:48:59  riouxp
+#    Added field for maintaining parent's FASTA header line.
+#
 #    Revision 1.2  2007/07/11 22:08:27  riouxp
 #    Fixed bug with empty internal elements.
 #
@@ -31,6 +34,7 @@ seqlength               single          int4
 
 # The following fields are used for subregions of a genome, but not for the main genome
 parentId                single          string
+parentName              single          string          from fastaheader of parent
 parentStart             single          int4            Start always < stop
 parentStop              single          int4            Stop always > start
 parentStrand            single          string          "+" or "-"
