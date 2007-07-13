@@ -1,9 +1,12 @@
 #
 # A list of hit results; not much else for the moment.
 #
-#    $Id: SimpleHitList.pir,v 1.2 2007/07/13 21:14:00 riouxp Exp $
+#    $Id: SimpleHitList.pir,v 1.3 2007/07/13 21:44:50 riouxp Exp $
 #
 #    $Log: SimpleHitList.pir,v $
+#    Revision 1.3  2007/07/13 21:44:50  riouxp
+#    Improved time reporting.
+#
 #    Revision 1.2  2007/07/13 21:14:00  riouxp
 #    Added timing info, for better logging.
 #
@@ -23,6 +26,8 @@
 
 # Field name		Sing/Array/Hash	Type		Comments
 #---------------------- ---------------	---------------	-----------------------
+preparetime             single          int4
+searchtime              single          int4
 timetaken               single          string          in seconds
 hitlist                 array           <SimpleHit>
 

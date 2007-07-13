@@ -1,9 +1,12 @@
 #
 # Implements SearchEngine for HMMER2
 #
-#    $Id: HMMER2SearchEngine.pir,v 1.5 2007/07/13 21:14:00 riouxp Exp $
+#    $Id: HMMER2SearchEngine.pir,v 1.6 2007/07/13 21:44:50 riouxp Exp $
 #
 #    $Log: HMMER2SearchEngine.pir,v $
+#    Revision 1.6  2007/07/13 21:44:50  riouxp
+#    Improved time reporting.
+#
 #    Revision 1.5  2007/07/13 21:14:00  riouxp
 #    Added timing info, for better logging.
 #
@@ -40,6 +43,7 @@
 #tmpworkdir              single          string          Optional
 #debug                   single          int4
 tmpfiles                array           string
+preparetimes            hash            int4
 
 - EndFieldsTable
 
@@ -62,6 +66,8 @@ sub PrepareElementSearch {
 
     my $token = "";
     my $HMMbuildOpts = "--fast --gapmax 1";
+
+    my $starttime = time;
 
     # Build model for PLUS strand
     if ($forstrand ne "-") { # we do the test this way so we can build both + and - models
@@ -106,6 +112,10 @@ sub PrepareElementSearch {
         $token .= "\0" if $token ne "";
         $token .= $HMMfile;
     }
+
+    my $prephash = $self->get_preparetimes() || {};
+    $prephash->{$token} = time-$starttime;
+    $self->set_preparetimes($prephash);
 
     $token;
 }
@@ -153,9 +163,14 @@ sub SearchSequences {
         push(@$finalhitlist, @$hitlist);
     }
 
+    my $searchtime  = time-$starttime;
+    my $preparetime = $self->get_preparetimes()->{$token};
+
     my $finalhitObj = new PirObject::SimpleHitList(
-        timetaken => (time-$starttime),
-        hitlist   => $finalhitlist,
+        preparetime => $preparetime,
+        searchtime  => $searchtime,
+        timetaken   => $preparetime+$searchtime,
+        hitlist     => $finalhitlist,
     );
 
     $finalhitObj;
