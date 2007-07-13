@@ -1,9 +1,12 @@
 #
 # Implements SearchEngine for HMMER2
 #
-#    $Id: HMMER2SearchEngine.pir,v 1.4 2007/07/12 23:01:18 riouxp Exp $
+#    $Id: HMMER2SearchEngine.pir,v 1.5 2007/07/13 21:14:00 riouxp Exp $
 #
 #    $Log: HMMER2SearchEngine.pir,v $
+#    Revision 1.5  2007/07/13 21:14:00  riouxp
+#    Added timing info, for better logging.
+#
 #    Revision 1.4  2007/07/12 23:01:18  riouxp
 #    Fixed bug with HMMbuild options.
 #
@@ -117,6 +120,7 @@ sub SearchSequences {
 
     my $finalhitlist = [];
     my @HMMfiles = split(/\0/,$token);
+    my $starttime=time;
     foreach my $HMMfile (@HMMfiles) {
 
         print STDERR "Debug: Searching with $HMMfile...\n" if $self->get_debug();
@@ -150,7 +154,8 @@ sub SearchSequences {
     }
 
     my $finalhitObj = new PirObject::SimpleHitList(
-        hitlist => $finalhitlist,
+        timetaken => (time-$starttime),
+        hitlist   => $finalhitlist,
     );
 
     $finalhitObj;

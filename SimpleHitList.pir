@@ -1,9 +1,12 @@
 #
 # A list of hit results; not much else for the moment.
 #
-#    $Id: SimpleHitList.pir,v 1.1 2007/07/11 19:55:18 riouxp Exp $
+#    $Id: SimpleHitList.pir,v 1.2 2007/07/13 21:14:00 riouxp Exp $
 #
 #    $Log: SimpleHitList.pir,v $
+#    Revision 1.2  2007/07/13 21:14:00  riouxp
+#    Added timing info, for better logging.
+#
 #    Revision 1.1  2007/07/11 19:55:18  riouxp
 #    New project. Initial check-in.
 #
@@ -20,6 +23,7 @@
 
 # Field name		Sing/Array/Hash	Type		Comments
 #---------------------- ---------------	---------------	-----------------------
+timetaken               single          string          in seconds
 hitlist                 array           <SimpleHit>
 
 - EndFieldsTable
