@@ -10,9 +10,13 @@
 #
 # all properly parsed and packaged in neat objects.
 #
-#    $Id: LinStruct.pir,v 1.1 2007/07/11 19:55:18 riouxp Exp $
+#    $Id: LinStruct.pir,v 1.2 2007/07/16 00:13:37 riouxp Exp $
 #
 #    $Log: LinStruct.pir,v $
+#    Revision 1.2  2007/07/16 00:13:37  riouxp
+#    HMMweasel: added -L option. HMMweasel and LinStruct: added support
+#    for structure entries in a single line, such as "---AAAbbb---CCAAA---".
+#
 #    Revision 1.1  2007/07/11 19:55:18  riouxp
 #    New project. Initial check-in.
 #
@@ -115,4 +119,52 @@ sub ImportFromTwoStrings {
     );
 
     $self; # always an object, even if method is called as a class method.
+}
+
+sub ImportFromOneString {
+    my $self   = shift;
+    my $string = shift || "";   # e.g -----aaaaa----bbbbb---aaaaa----ccc---- ; dots and dashes are the SAME!
+
+    die "Error: when building a structure from a pseudo-sequence, we support\n",
+        "only the letters a-z, A-Z and the '-'.\n"
+        unless $string =~ m#^[a-zA-Z\-]+$#;
+
+    my $string1 = $string;
+    my $string2 = $string;
+
+    # First, transform regions of '----' into 00, 01, 02 etc
+    my $cnt  = "00";
+    my $last = -9; # way outside range... -1 or 0 would cause a bug
+    for (my $i=0;$i<length($string);$i++) {
+        my $c = substr($string2,$i,1);
+        if ($c ne "-" && $c ne ".") { # dots and dashes are the same!
+            substr($string1,$i,1) = "_"; # arbitrary char; will be removed later in all element IDs
+            next;
+        }
+        $cnt++ if $i != $last+1;  # magical increment... 00, 01, 02, 03 etc etc
+        $last = $i;
+        substr($string1,$i,1) = substr($cnt,0,1);
+        substr($string2,$i,1) = substr($cnt,1,1);
+    }
+
+    my $obj = $self->ImportFromTwoStrings($string1,$string2);
+
+    # Now we adjust all the element IDs so that "#a", "#B" etc become simply "a", "B" etc.
+    my $idsByPos   = $obj->get_idsByPos();
+    foreach my $pos (keys %$idsByPos) {
+        my $id = $idsByPos->{$pos};
+        next unless $id =~ s/^_//;
+        $idsByPos->{$pos}=$id;
+    }
+
+    my $elemsByIds = $obj->get_elemsByIds();
+    foreach my $id (keys %$elemsByIds) {
+        next unless $id =~ m/^_/;
+        my $elem = delete $elemsByIds->{$id}; # remove from hash
+        $id =~ s/^_//;
+        $elem->set_elemId($id);
+        $elemsByIds->{$id}=$elem; # reinsert in hash
+    }
+
+    $obj;
 }
