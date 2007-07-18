@@ -4,9 +4,12 @@
 # and a molecular sequence; this object also contains a
 # copy of some of the structural information for the element.
 #
-#    $Id: ResultElement.pir,v 1.1 2007/07/11 19:55:18 riouxp Exp $
+#    $Id: ResultElement.pir,v 1.2 2007/07/18 21:26:20 riouxp Exp $
 #
 #    $Log: ResultElement.pir,v $
+#    Revision 1.2  2007/07/18 21:26:20  riouxp
+#    Added field "piecenumber". Removed obsolete field "distancewarnings".
+#
 #    Revision 1.1  2007/07/11 19:55:18  riouxp
 #    New project. Initial check-in.
 #
@@ -26,7 +29,7 @@
 elementId               single          string
 elemStart               single          int4
 elemStop                single          int4
-elemType                single          string          For internal debugging
+elemType                single          string
 
 seqStart                single          int4
 seqStop                 single          int4
@@ -35,7 +38,7 @@ evalue                  single          string
 
 sequence                single          string
 
-distancewarnings        single          string
+piecenumber             single          int4             When part of a solution in pieces
 
 - EndFieldsTable
 - Methods
