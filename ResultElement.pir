@@ -4,9 +4,13 @@
 # and a molecular sequence; this object also contains a
 # copy of some of the structural information for the element.
 #
-#    $Id: ResultElement.pir,v 1.2 2007/07/18 21:26:20 riouxp Exp $
+#    $Id: ResultElement.pir,v 1.3 2007/07/20 17:44:44 riouxp Exp $
 #
 #    $Log: ResultElement.pir,v $
+#    Revision 1.3  2007/07/20 17:44:44  riouxp
+#    Added support to detect and eliminate results that are
+#    substantially the same.
+#
 #    Revision 1.2  2007/07/18 21:26:20  riouxp
 #    Added field "piecenumber". Removed obsolete field "distancewarnings".
 #
@@ -43,3 +47,23 @@ piecenumber             single          int4             When part of a solution
 - EndFieldsTable
 - Methods
 
+sub IsSubstantiallyTheSameAs {
+    my $self  = shift;
+    my $other = shift || die "Need other object to compare to.\n";
+
+    my $class    = ref($self) ||
+        die "This is an instance method.\n";
+
+    die "Other object is not of the same class as self!?\n"
+        unless $other->isa($class);
+
+    foreach my $field qw( seqStart seqStop elementId elemStart elemStop elemType sequence piecenumber ) {
+        my $v1 = $self->$field();
+        my $v2 = $other->$field();
+        next     if !defined($v1) && !defined($v2);
+        return 0 if !defined($v1) || !defined($v2);
+        return 0 if $v1 ne $v2;
+    }
+
+    return 1;
+}

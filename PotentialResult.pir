@@ -1,9 +1,13 @@
 #
 # A structure for maintaining a potential result
 #
-#    $Id: PotentialResult.pir,v 1.4 2007/07/19 18:27:38 riouxp Exp $
+#    $Id: PotentialResult.pir,v 1.5 2007/07/20 17:44:44 riouxp Exp $
 #
 #    $Log: PotentialResult.pir,v $
+#    Revision 1.5  2007/07/20 17:44:44  riouxp
+#    Added support to detect and eliminate results that are
+#    substantially the same.
+#
 #    Revision 1.4  2007/07/19 18:27:38  riouxp
 #    moved elementlist to end of object definition. Added FASTA dump support
 #    and a utility routine to get the set of star/stop pairs for each piece
@@ -195,4 +199,36 @@ sub AsFancyFasta {
     # Return FASTA sequence record
 
     return $head . join("\n",@seqs) . "\n";
+}
+
+sub IsSubstantiallyTheSameAs {
+    my $self  = shift;
+    my $other = shift || die "Need other object to compare to.\n";
+
+    my $class    = ref($self) || 
+        die "This is an instance method.\n";
+
+    die "Other object is not of the same class as self!?\n"
+        unless $other->isa($class);
+
+    foreach my $field qw( sequenceId solutionStrand numMatches canbealigned numPieces ) {
+        my $v1 = $self->$field();
+        my $v2 = $other->$field();
+        next     if !defined($v1) && !defined($v2);
+        return 0 if !defined($v1) || !defined($v2);
+        return 0 if $v1 ne $v2;
+    }
+
+    my $elist1 = $self->get_elementlist();
+    my $elist2 = $other->get_elementlist();
+
+    return 0 if @$elist1 != @$elist2;
+
+    for (my $i=0;$i<@$elist1;$i++) {
+        my $e1 = $elist1->[$i];
+        my $e2 = $elist2->[$i];
+        return 0 unless $e1->IsSubstantiallyTheSameAs($e2);
+    }
+
+    return 1;
 }
