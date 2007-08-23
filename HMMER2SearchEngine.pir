@@ -1,9 +1,12 @@
 #
 # Implements SearchEngine for HMMER2
 #
-#    $Id: HMMER2SearchEngine.pir,v 1.6 2007/07/13 21:44:50 riouxp Exp $
+#    $Id: HMMER2SearchEngine.pir,v 1.7 2007/08/23 17:50:33 riouxp Exp $
 #
 #    $Log: HMMER2SearchEngine.pir,v $
+#    Revision 1.7  2007/08/23 17:50:33  riouxp
+#    Fixed bug when searcging with a MINUS strand HMM.
+#
 #    Revision 1.6  2007/07/13 21:44:50  riouxp
 #    Improved time reporting.
 #
@@ -158,6 +161,10 @@ sub SearchSequences {
                 #my $genomeObj = $RawDiskSeqs->GetRawSeqById($targetId);
                 #my $genomeLen = $genomeObj->get_seqlength();
                 $hit->set_hitStrand("-");
+                my $seq = $hit->get_hitAlign();  # This need to be in the real forward dir
+                $seq = reverse($seq);
+                $seq =~ tr/acgtACGT/tgcaTGCA/;
+                $hit->set_hitAlign($seq);
             }
         }
         push(@$finalhitlist, @$hitlist);
