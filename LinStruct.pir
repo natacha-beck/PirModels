@@ -10,9 +10,13 @@
 #
 # all properly parsed and packaged in neat objects.
 #
-#    $Id: LinStruct.pir,v 1.3 2007/07/18 21:24:14 riouxp Exp $
+#    $Id: LinStruct.pir,v 1.4 2008/02/27 18:46:03 riouxp Exp $
 #
 #    $Log: LinStruct.pir,v $
+#    Revision 1.4  2008/02/27 18:46:03  riouxp
+#    Handle situation when importing a struct+multalign file where
+#    there are no multalign at all.
+#
 #    Revision 1.3  2007/07/18 21:24:14  riouxp
 #    Added support for reading from a multiple alignment (and storing
 #    the mutliple alignment itself).
@@ -198,10 +202,14 @@ sub ImportFromMultipleAlignment { # FASTA reader, uses 'umac' as data converter.
     die "Error: the multiple alignment file '$file' does not seem to start with a Structure or HMMmask entry.\n"
          unless @text && $text[0] =~ m#^>(Structure|HMMmask)#i;
     shift(@text);
-    my $struct = "";
-    $struct .= shift(@text) while @text && $text[0] !~ m#^>#;
-    $struct =~ s/\s+//g;
-    # We will parse the string $struct later, once we know the length of the
+
+    my @struct = ();
+    while (@text && $text[0] !~ m#^>#) {
+        my $struct = shift(@text);
+        $struct =~ s/\s+//g;
+        push(@struct,$struct);
+    }
+    # We will parse the strings in @struct later, once we know the length of the
     # aligned sequences...
 
     my $seqlist = [];
@@ -242,18 +250,23 @@ sub ImportFromMultipleAlignment { # FASTA reader, uses 'umac' as data converter.
     # OK, let's go back to our single $struct line, and let's parse it.
     my $alilen = $ma->AlignmentLength();
     my $LinStruct = undef;
-    if (2*$alilen == length($struct)) { # Twice the length? Must be ERPIN format
-        die "Error: structure entry is invalid in file '$file'.\n"
-             unless $struct =~ m#^\d+$#; # digits only
-        die "Error: structure entry contains odd number of digits.\n"
-             unless (length($struct) & 1) == 0;
-        my $struct1 = substr($struct,0,length($struct)/2);
-        my $struct2 = substr($struct,length($struct)/2);
+    if (@struct == 2 && $alilen == length($struct[0])) { # Twice the length? Must be ERPIN format
+        foreach my $struct (@struct) {
+            die "Error: structure entry is invalid in file '$file'.\n"
+                 unless $struct =~ m#^\d+$#; # digits only
+            die "Error: structure entry is of inconsistent length in '$file'.\n"
+                 unless length($struct) == $alilen;
+        }
+        my $struct1 = $struct[0];
+        my $struct2 = $struct[1];
         $self->ImportFromTwoStrings($struct1,$struct2);
-    } elsif ($alilen == length($struct)) { # Same length? Must by HMMmask
-        $self->ImportFromOneString($struct);
+    } elsif (@struct == 1 && $alilen == length($struct[0])) { # Same length? Must by HMMmask
+        $self->ImportFromOneString($struct[0]);
+    } elsif ((@struct == 1 || @struct == 2) && $alilen == 0) { # case with NO alignment at all!
+        $self->ImportFromOneString($struct[0])             if @struct == 1;
+        $self->ImportFromTwoStrings($struct[0],$struct[1]) if @struct == 2;
     } else {
-        die "Error: the structure entry in your alignment file has length ".length($struct)." while\n" .
+        die "Error: the structure entry in your alignment file has length ".length($struct[0])." while\n" .
             "the sequences in the alignment have length $alilen.\n";
     }
 
