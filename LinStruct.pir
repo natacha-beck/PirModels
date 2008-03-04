@@ -10,9 +10,12 @@
 #
 # all properly parsed and packaged in neat objects.
 #
-#    $Id: LinStruct.pir,v 1.6 2008/03/04 18:02:35 riouxp Exp $
+#    $Id: LinStruct.pir,v 1.7 2008/03/04 18:05:30 riouxp Exp $
 #
 #    $Log: LinStruct.pir,v $
+#    Revision 1.7  2008/03/04 18:05:30  riouxp
+#    Fixed syntax bug.
+#
 #    Revision 1.6  2008/03/04 18:02:35  riouxp
 #    Adjusted multalign parser to ignore non-significant blank spaces.
 #
@@ -261,7 +264,7 @@ sub ImportFromMultipleAlignment { # FASTA reader, uses 'umac' as data converter.
             my $struct1 = substr($struct,0,length($struct)/2);
             my $struct2 = substr($struct,length($struct)/2);
             $self->ImportFromTwoStrings($struct1,$struct2);
-        } else { another guess, must be HMMmask
+        } else { # another guess, must be HMMmask
             $self->ImportFromOneString($struct);
         }
     }
