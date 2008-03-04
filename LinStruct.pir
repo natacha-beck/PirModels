@@ -10,9 +10,12 @@
 #
 # all properly parsed and packaged in neat objects.
 #
-#    $Id: LinStruct.pir,v 1.5 2008/02/27 19:04:32 riouxp Exp $
+#    $Id: LinStruct.pir,v 1.6 2008/03/04 18:02:35 riouxp Exp $
 #
 #    $Log: LinStruct.pir,v $
+#    Revision 1.6  2008/03/04 18:02:35  riouxp
+#    Adjusted multalign parser to ignore non-significant blank spaces.
+#
 #    Revision 1.5  2008/02/27 19:04:32  riouxp
 #    Fixed the previous fix.
 #
@@ -221,7 +224,7 @@ sub ImportFromMultipleAlignment { # FASTA reader, uses 'umac' as data converter.
 
     for (my $i = 0; $i < @text; $i++) {
         my $line = $text[$i];
-        if ($line =~ m#^>(\S+)(\s+.*\S)?\s*$#) {
+        if ($line =~ m#^>\s*(\S+)(\s+.*\S)?\s*$#) {
             my ($newid,$rest) = ($1,$2);
             $rest = "" if !defined($rest);
             if ($seqobj) {
