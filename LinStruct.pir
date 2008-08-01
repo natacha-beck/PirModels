@@ -10,9 +10,14 @@
 #
 # all properly parsed and packaged in neat objects.
 #
-#    $Id: LinStruct.pir,v 1.7 2008/03/04 18:05:30 riouxp Exp $
+#    $Id: LinStruct.pir,v 1.8 2008/08/01 18:55:23 riouxp Exp $
 #
 #    $Log: LinStruct.pir,v $
+#    Revision 1.8  2008/08/01 18:55:23  riouxp
+#    Added ability to load a multalign from a filehandle
+#    instead of just a filename. This allows you to bypass the
+#    need for the "umac" external executable, if necessary.
+#
 #    Revision 1.7  2008/03/04 18:05:30  riouxp
 #    Fixed syntax bug.
 #
@@ -191,13 +196,18 @@ sub ImportFromOneString {
 
 sub ImportFromMultipleAlignment { # FASTA reader, uses 'umac' as data converter.
     my $self = shift;
-    my $file = shift;
+    my $file = shift; # filename or filehandle in class IO::File
 
     my $class = ref($self) || $self;
     $self = new $class() if $self eq $class; # make a new plain object
 
-    my $fh = new IO::File "umac -K -i '$file' -o - -f FASTA|"
-        or die "Cannot process multiple alignment file '$file' through umac?\n";
+    my $fh = undef;
+    if ($file->isa("IO::File")) {
+        $fh = $file;
+    } else {
+        $fh = new IO::File "umac -K -i '$file' -o - -f FASTA|"
+            or die "Cannot process multiple alignment file '$file' through umac?\n";
+    }
     my @text = ( <$fh> ); # slurp;
     $fh->close();
     chomp @text;
