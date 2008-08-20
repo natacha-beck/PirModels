@@ -1,6 +1,12 @@
 #
 # A simple containiner for a multiple alignment.
 #
+#  $Id: MultAlign.pir,v 1.2 2008/08/20 19:43:22 riouxp Exp $
+#
+#  $Log: MultAlign.pir,v $
+#  Revision 1.2  2008/08/20 19:43:22  riouxp
+#  Added CVS tracking variables.
+#
 
 - PerlClass	PirObject::MultAlign
 - InheritsFrom	PirObject
@@ -14,6 +20,9 @@ alignedSeqs		array		<AlignedSeq>
 - EndFieldsTable
 
 - Methods
+
+our $RCS_VERSION='$Id: MultAlign.pir,v 1.2 2008/08/20 19:43:22 riouxp Exp $';
+our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 sub NumSequences {
     my $self = shift;
