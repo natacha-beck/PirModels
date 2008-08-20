@@ -1,6 +1,12 @@
 #
 # A simple containiner for a sequence in a multiple alignment
 #
+#  $Id: AlignedSeq.pir,v 1.2 2008/08/20 19:43:22 riouxp Exp $
+#
+#  $Log: AlignedSeq.pir,v $
+#  Revision 1.2  2008/08/20 19:43:22  riouxp
+#  Added CVS tracking variables.
+#
 
 - PerlClass	PirObject::AlignedSeq
 - InheritsFrom	PirObject
@@ -15,6 +21,9 @@ sequence		single		string
 - EndFieldsTable
 
 - Methods
+
+our $RCS_VERSION='$Id: AlignedSeq.pir,v 1.2 2008/08/20 19:43:22 riouxp Exp $';
+our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 sub AsFasta {
     my $self = shift;
