@@ -4,9 +4,12 @@
 # search engine; subclasses should provided the necessary
 # method to implement the search uging the API defined here.
 #
-#    $Id: SearchEngine.pir,v 1.1 2007/07/11 19:55:18 riouxp Exp $
+#    $Id: SearchEngine.pir,v 1.2 2008/08/20 19:43:22 riouxp Exp $
 #
 #    $Log: SearchEngine.pir,v $
+#    Revision 1.2  2008/08/20 19:43:22  riouxp
+#    Added CVS tracking variables.
+#
 #    Revision 1.1  2007/07/11 19:55:18  riouxp
 #    New project. Initial check-in.
 #
@@ -38,6 +41,9 @@ debug                   single          int4            Optional
 - EndFieldsTable
 
 - Methods
+
+our $RCS_VERSION='$Id: SearchEngine.pir,v 1.2 2008/08/20 19:43:22 riouxp Exp $';
+our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 # Returns an internal opaque token to be used by SearchSequences().
 sub PrepareElementSearch {

@@ -1,9 +1,12 @@
 #
 # Single element of a LinStruct
 #
-#    $Id: StructElem.pir,v 1.1 2007/07/11 19:55:18 riouxp Exp $
+#    $Id: StructElem.pir,v 1.2 2008/08/20 19:43:22 riouxp Exp $
 #
 #    $Log: StructElem.pir,v $
+#    Revision 1.2  2008/08/20 19:43:22  riouxp
+#    Added CVS tracking variables.
+#
 #    Revision 1.1  2007/07/11 19:55:18  riouxp
 #    New project. Initial check-in.
 #
@@ -30,4 +33,6 @@ startposR               single          int4            for right element if HEL
 
 - Methods
 
+our $RCS_VERSION='$Id: StructElem.pir,v 1.2 2008/08/20 19:43:22 riouxp Exp $';
+our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 

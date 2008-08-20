@@ -1,9 +1,12 @@
 #
 # A structure for maintaining a potential result
 #
-#    $Id: PotentialResult.pir,v 1.5 2007/07/20 17:44:44 riouxp Exp $
+#    $Id: PotentialResult.pir,v 1.6 2008/08/20 19:43:22 riouxp Exp $
 #
 #    $Log: PotentialResult.pir,v $
+#    Revision 1.6  2008/08/20 19:43:22  riouxp
+#    Added CVS tracking variables.
+#
 #    Revision 1.5  2007/07/20 17:44:44  riouxp
 #    Added support to detect and eliminate results that are
 #    substantially the same.
@@ -55,6 +58,9 @@ elementlist             array           <ResultElement>
 - EndFieldsTable
 
 - Methods
+
+our $RCS_VERSION='$Id: PotentialResult.pir,v 1.6 2008/08/20 19:43:22 riouxp Exp $';
+our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 sub UpdateMatchStructStartAndStop {
     my $self = shift;

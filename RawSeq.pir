@@ -2,9 +2,12 @@
 # A structure for maintaining the information about a single
 # molecular sequence that is part of a RawDiskSeqs collection
 #
-#    $Id: RawSeq.pir,v 1.3 2007/07/13 20:48:59 riouxp Exp $
+#    $Id: RawSeq.pir,v 1.4 2008/08/20 19:43:22 riouxp Exp $
 #
 #    $Log: RawSeq.pir,v $
+#    Revision 1.4  2008/08/20 19:43:22  riouxp
+#    Added CVS tracking variables.
+#
 #    Revision 1.3  2007/07/13 20:48:59  riouxp
 #    Added field for maintaining parent's FASTA header line.
 #
@@ -41,6 +44,9 @@ parentStrand            single          string          "+" or "-"
 
 - EndFieldsTable
 - Methods
+
+our $RCS_VERSION='$Id: RawSeq.pir,v 1.4 2008/08/20 19:43:22 riouxp Exp $';
+our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 sub GetSubseq {
     my $self      = shift;

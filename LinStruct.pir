@@ -10,9 +10,12 @@
 #
 # all properly parsed and packaged in neat objects.
 #
-#    $Id: LinStruct.pir,v 1.9 2008/08/01 20:58:08 riouxp Exp $
+#    $Id: LinStruct.pir,v 1.10 2008/08/20 19:43:22 riouxp Exp $
 #
 #    $Log: LinStruct.pir,v $
+#    Revision 1.10  2008/08/20 19:43:22  riouxp
+#    Added CVS tracking variables.
+#
 #    Revision 1.9  2008/08/01 20:58:08  riouxp
 #    Improved detection of file vs filehandle.
 #
@@ -68,6 +71,9 @@ multalign               single          <MultAlign>     A multiple alignement to
 - EndFieldsTable
 
 - Methods
+
+our $RCS_VERSION='$Id: LinStruct.pir,v 1.10 2008/08/20 19:43:22 riouxp Exp $';
+our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 sub ImportFromTwoStrings {
     my $self    = shift;

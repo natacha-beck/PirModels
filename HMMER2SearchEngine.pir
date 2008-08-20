@@ -1,9 +1,12 @@
 #
 # Implements SearchEngine for HMMER2
 #
-#    $Id: HMMER2SearchEngine.pir,v 1.7 2007/08/23 17:50:33 riouxp Exp $
+#    $Id: HMMER2SearchEngine.pir,v 1.8 2008/08/20 19:43:22 riouxp Exp $
 #
 #    $Log: HMMER2SearchEngine.pir,v $
+#    Revision 1.8  2008/08/20 19:43:22  riouxp
+#    Added CVS tracking variables.
+#
 #    Revision 1.7  2007/08/23 17:50:33  riouxp
 #    Fixed bug when searcging with a MINUS strand HMM.
 #
@@ -53,6 +56,9 @@ preparetimes            hash            int4
 - Methods
 
 use PirObject qw( SimpleHitList );
+
+our $RCS_VERSION='$Id: HMMER2SearchEngine.pir,v 1.8 2008/08/20 19:43:22 riouxp Exp $';
+our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 # Returns an internal opaque token to be used by SearchSequences().
 sub PrepareElementSearch {

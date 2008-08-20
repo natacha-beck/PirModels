@@ -2,9 +2,12 @@
 # Represents the raw information about a search engine's
 # hit to a molecular sequence.
 #
-#    $Id: SimpleHit.pir,v 1.2 2007/07/12 20:21:49 riouxp Exp $
+#    $Id: SimpleHit.pir,v 1.3 2008/08/20 19:43:22 riouxp Exp $
 #
 #    $Log: SimpleHit.pir,v $
+#    Revision 1.3  2008/08/20 19:43:22  riouxp
+#    Added CVS tracking variables.
+#
 #    Revision 1.2  2007/07/12 20:21:49  riouxp
 #    Added field for storing the exact alignment as reported
 #    by the search engine.
@@ -35,4 +38,7 @@ hitEvalue               single          string
 
 - EndFieldsTable
 - Methods
+
+our $RCS_VERSION='$Id: SimpleHit.pir,v 1.3 2008/08/20 19:43:22 riouxp Exp $';
+our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 

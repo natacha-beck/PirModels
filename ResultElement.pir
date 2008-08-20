@@ -4,9 +4,12 @@
 # and a molecular sequence; this object also contains a
 # copy of some of the structural information for the element.
 #
-#    $Id: ResultElement.pir,v 1.3 2007/07/20 17:44:44 riouxp Exp $
+#    $Id: ResultElement.pir,v 1.4 2008/08/20 19:43:22 riouxp Exp $
 #
 #    $Log: ResultElement.pir,v $
+#    Revision 1.4  2008/08/20 19:43:22  riouxp
+#    Added CVS tracking variables.
+#
 #    Revision 1.3  2007/07/20 17:44:44  riouxp
 #    Added support to detect and eliminate results that are
 #    substantially the same.
@@ -46,6 +49,9 @@ piecenumber             single          int4             When part of a solution
 
 - EndFieldsTable
 - Methods
+
+our $RCS_VERSION='$Id: ResultElement.pir,v 1.4 2008/08/20 19:43:22 riouxp Exp $';
+our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 sub IsSubstantiallyTheSameAs {
     my $self  = shift;

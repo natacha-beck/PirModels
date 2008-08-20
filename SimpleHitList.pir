@@ -1,9 +1,12 @@
 #
 # A list of hit results; not much else for the moment.
 #
-#    $Id: SimpleHitList.pir,v 1.3 2007/07/13 21:44:50 riouxp Exp $
+#    $Id: SimpleHitList.pir,v 1.4 2008/08/20 19:43:22 riouxp Exp $
 #
 #    $Log: SimpleHitList.pir,v $
+#    Revision 1.4  2008/08/20 19:43:22  riouxp
+#    Added CVS tracking variables.
+#
 #    Revision 1.3  2007/07/13 21:44:50  riouxp
 #    Improved time reporting.
 #
@@ -33,4 +36,7 @@ hitlist                 array           <SimpleHit>
 
 - EndFieldsTable
 - Methods
+
+our $RCS_VERSION='$Id: SimpleHitList.pir,v 1.4 2008/08/20 19:43:22 riouxp Exp $';
+our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
