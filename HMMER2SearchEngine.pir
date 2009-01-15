@@ -1,9 +1,14 @@
 #
 # Implements SearchEngine for HMMER2
 #
-#    $Id: HMMER2SearchEngine.pir,v 1.8 2008/08/20 19:43:22 riouxp Exp $
+#    $Id: HMMER2SearchEngine.pir,v 1.9 2009/01/15 23:54:59 riouxp Exp $
 #
 #    $Log: HMMER2SearchEngine.pir,v $
+#    Revision 1.9  2009/01/15 23:54:59  riouxp
+#    Added transparent support for caching calibrated HMMs. The cache
+#    directory must be created first (default, "HOME/.HMMweasel.cache").
+#    Added option -C to change the cache directory location.
+#
 #    Revision 1.8  2008/08/20 19:43:22  riouxp
 #    Added CVS tracking variables.
 #
@@ -57,7 +62,7 @@ preparetimes            hash            int4
 
 use PirObject qw( SimpleHitList );
 
-our $RCS_VERSION='$Id: HMMER2SearchEngine.pir,v 1.8 2008/08/20 19:43:22 riouxp Exp $';
+our $RCS_VERSION='$Id: HMMER2SearchEngine.pir,v 1.9 2009/01/15 23:54:59 riouxp Exp $';
 our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 # Returns an internal opaque token to be used by SearchSequences().
@@ -66,6 +71,11 @@ sub PrepareElementSearch {
     my $fastamultalign = shift; # The actual multiple alignment in text format, as a single string
     my $id             = shift; # Optional ID for this alignment.
     my $forstrand      = shift || ""; # Optional "+" or "-"; default is both
+    my $HMM_cache_dir  = shift || ""; # Optional directory where calibrated HMMs can be cached
+
+    if ($HMM_cache_dir && (! -d $HMM_cache_dir || ! -w _ || ! -r _ )) {
+        die "Error: HMM cache directory '$HMM_cache_dir' does not exist or is not writable?!?\n";
+    }
 
     my $tmpdir = $self->get_tmpworkdir() || "/tmp";
     $self->set_tmpworkdir($tmpdir);
@@ -80,21 +90,38 @@ sub PrepareElementSearch {
 
     # Build model for PLUS strand
     if ($forstrand ne "-") { # we do the test this way so we can build both + and - models
-        my $fa_file = "$tmpdir/P-$id.fa";
-        my $outfh = new IO::File ">$fa_file"
-           or die "Cannot write to file '$fa_file': $!\n";
-        print $outfh $fastamultalign;
-        $outfh->close();
 
-        # Build HMM with HMMER2
         my $HMMfile = "P-$id.hmm";
-        print STDERR "Debug: building $HMMfile...\n" if $self->get_debug();
-        system("cd $tmpdir || exit;hmmbuild $HMMbuildOpts $HMMfile $fa_file >out.$id.hbui 2>&1");
-        # Calibrate HMM
-        system("cd $tmpdir || exit;hmmcalibrate $HMMfile                    >out.$id.hcal 2>&1");
-
         my $tmpfiles = $self->get_tmpfiles();
-        push(@$tmpfiles, $fa_file, $HMMfile, "out.$id.hbui", "out.$id.hcal");
+
+        # Get cached version as symlink if it exists
+        if ($HMM_cache_dir && -f "$HMM_cache_dir/$HMMfile") {
+            print STDERR "Debug: using cached HMMfile '$HMM_cache_dir/$HMMfile'...\n" if $self->get_debug();
+            symlink("$HMM_cache_dir/$HMMfile","$tmpdir/$HMMfile");
+            push(@$tmpfiles, $HMMfile);
+        } else {
+            # Build new HMM otherwise and cache it if necessary
+            print STDERR "Debug: building $HMMfile...\n" if $self->get_debug();
+
+            # Build FASTA file
+            my $fa_file = "$tmpdir/P-$id.fa";
+            my $outfh = new IO::File ">$fa_file"
+               or die "Cannot write to file '$fa_file': $!\n";
+            print $outfh $fastamultalign;
+            $outfh->close();
+
+            # Build HMM with HMMER2
+            system("cd $tmpdir || exit;hmmbuild $HMMbuildOpts $HMMfile $fa_file >out.$id.hbui 2>&1");
+            # Calibrate HMM
+            system("cd $tmpdir || exit;hmmcalibrate $HMMfile                    >out.$id.hcal 2>&1");
+
+            # Cache it
+            if ($HMM_cache_dir) {
+                system("cd $tmpdir || exit;/bin/mv $HMMfile '$HMM_cache_dir/$HMMfile'");
+                symlink("$HMM_cache_dir/$HMMfile","$tmpdir/$HMMfile");
+            }
+            push(@$tmpfiles, $fa_file, $HMMfile, "out.$id.hbui", "out.$id.hcal");
+        }
 
         $token .= "\0" if $token ne "";
         $token .= $HMMfile;
@@ -102,21 +129,38 @@ sub PrepareElementSearch {
 
     # Build model for MINUS strand
     if ($forstrand ne "+") { # we do the test this way so we can build both + and - models
-        my $fa_file = "$tmpdir/M-$id.fa";
-        my $outfh = new IO::File ">$fa_file"
-           or die "Cannot write to file '$fa_file': $!\n";
-        print $outfh &_RevCompFastaFile($fastamultalign);
-        $outfh->close();
 
-        # Build HMM with HMMER2
         my $HMMfile = "M-$id.hmm";
-        print STDERR "Debug: building $HMMfile...\n" if $self->get_debug();
-        system("cd $tmpdir || exit;hmmbuild $HMMbuildOpts $HMMfile $fa_file >out.$id.hbui 2>&1");
-        # Calibrate HMM
-        system("cd $tmpdir || exit;hmmcalibrate $HMMfile                    >out.$id.hcal 2>&1");
-
         my $tmpfiles = $self->get_tmpfiles();
-        push(@$tmpfiles, $fa_file, $HMMfile, "out.$id.hbui", "out.$id.hcal");
+
+        # Get cached version as symlink if it exists
+        if ($HMM_cache_dir && -f "$HMM_cache_dir/$HMMfile") {
+            print STDERR "Debug: using cached HMMfile '$HMM_cache_dir/$HMMfile'...\n" if $self->get_debug();
+            symlink("$HMM_cache_dir/$HMMfile","$tmpdir/$HMMfile");
+            push(@$tmpfiles, $HMMfile);
+        } else {
+            # Build new HMM otherwise and cache it if necessary
+            print STDERR "Debug: building $HMMfile...\n" if $self->get_debug();
+
+            # Build FASTA file
+            my $fa_file = "$tmpdir/M-$id.fa";
+            my $outfh = new IO::File ">$fa_file"
+               or die "Cannot write to file '$fa_file': $!\n";
+            print $outfh &_RevCompFastaFile($fastamultalign);
+            $outfh->close();
+
+            # Build HMM with HMMER2
+            system("cd $tmpdir || exit;hmmbuild $HMMbuildOpts $HMMfile $fa_file >out.$id.hbui 2>&1");
+            # Calibrate HMM
+            system("cd $tmpdir || exit;hmmcalibrate $HMMfile                    >out.$id.hcal 2>&1");
+
+            # Cache it
+            if ($HMM_cache_dir) {
+                system("cd $tmpdir || exit;/bin/mv $HMMfile '$HMM_cache_dir/$HMMfile'");
+                symlink("$HMM_cache_dir/$HMMfile","$tmpdir/$HMMfile");
+            }
+            push(@$tmpfiles, $fa_file, $HMMfile, "out.$id.hbui", "out.$id.hcal");
+        }
 
         $token .= "\0" if $token ne "";
         $token .= $HMMfile;
