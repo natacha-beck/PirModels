@@ -1,9 +1,12 @@
 #
 # Implements SearchEngine for HMMER2
 #
-#    $Id: HMMER2SearchEngine.pir,v 1.10 2009/05/27 21:56:46 riouxp Exp $
+#    $Id: HMMER2SearchEngine.pir,v 1.11 2009/05/28 15:47:25 riouxp Exp $
 #
 #    $Log: HMMER2SearchEngine.pir,v $
+#    Revision 1.11  2009/05/28 15:47:25  riouxp
+#    Made sure mode 777 used for cached HMM file.
+#
 #    Revision 1.10  2009/05/27 21:56:46  riouxp
 #    Added ability to cache HMMs in a directory specified by the environment
 #    variable $HMMWEASEL_CACHEDIR.
@@ -66,7 +69,7 @@ preparetimes            hash            int4
 
 use PirObject qw( SimpleHitList );
 
-our $RCS_VERSION='$Id: HMMER2SearchEngine.pir,v 1.10 2009/05/27 21:56:46 riouxp Exp $';
+our $RCS_VERSION='$Id: HMMER2SearchEngine.pir,v 1.11 2009/05/28 15:47:25 riouxp Exp $';
 our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 # Returns an internal opaque token to be used by SearchSequences().
@@ -121,9 +124,10 @@ sub PrepareElementSearch {
 
             # Cache it
             if ($HMM_cache_dir) {
-                chmod(0777,$HMMfile);
-                system("cd $tmpdir || exit;/bin/mv $HMMfile '$HMM_cache_dir/$HMMfile'");
-                symlink("$HMM_cache_dir/$HMMfile","$tmpdir/$HMMfile");
+                my $cache = "$HMM_cache_dir/$HMMfile";
+                system("cd $tmpdir || exit;/bin/mv $HMMfile '$cache'");
+                chmod(0777,$cache);
+                symlink($cache,"$tmpdir/$HMMfile");
             }
             push(@$tmpfiles, $fa_file, $HMMfile, "out.$id.hbui", "out.$id.hcal");
         }
@@ -161,9 +165,10 @@ sub PrepareElementSearch {
 
             # Cache it
             if ($HMM_cache_dir) {
-                chmod(0777,$HMMfile);
-                system("cd $tmpdir || exit;/bin/mv $HMMfile '$HMM_cache_dir/$HMMfile'");
-                symlink("$HMM_cache_dir/$HMMfile","$tmpdir/$HMMfile");
+                my $cache = "$HMM_cache_dir/$HMMfile";
+                system("cd $tmpdir || exit;/bin/mv $HMMfile '$cache'");
+                chmod(0777,$cache);
+                symlink($cache,"$tmpdir/$HMMfile");
             }
             push(@$tmpfiles, $fa_file, $HMMfile, "out.$id.hbui", "out.$id.hcal");
         }
