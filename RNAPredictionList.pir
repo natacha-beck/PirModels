@@ -1,11 +1,14 @@
 
 #
-# PirObject definition file for a tRNA prediction
-# This object is used by tRNASpinner.
+# PirObject definition file for a RNA prediction
+# This object is used by tRNASpinner and RNAfinder.
 #
-#    $Id: RNAPredictionList.pir,v 1.1 2008/10/28 21:57:23 nbeck Exp $
+#    $Id: RNAPredictionList.pir,v 1.2 2009/07/21 15:58:18 nbeck Exp $
 #
 #    $Log: RNAPredictionList.pir,v $
+#    Revision 1.2  2009/07/21 15:58:18  nbeck
+#    Fusion between RNASpinner and RNAfinder.
+#
 #    Revision 1.1  2008/10/28 21:57:23  nbeck
 #    Initial check-in.
 #
@@ -24,6 +27,9 @@
 #---------------------- ---------------	---------------	-----------------------
 BracketModel            single          string          Representation of uses bracket Model.
 ConsensusModel          single          string          Representation of consensus.
+Name                    single          string          Name of model
+NumItem                 single          string          Number of Item
+Label                   single          string          Label name
 rnapredictions          array          <RNAPrediction>  Each predicted RNA.
           
 
@@ -31,7 +37,7 @@ rnapredictions          array          <RNAPrediction>  Each predicted RNA.
 
 - Methods
 
-our $RCS_VERSION='$Id: RNAPredictionList.pir,v 1.1 2008/10/28 21:57:23 nbeck Exp $';
+our $RCS_VERSION='$Id: RNAPredictionList.pir,v 1.2 2009/07/21 15:58:18 nbeck Exp $';
 our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 # None of the moment.

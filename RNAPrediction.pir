@@ -1,11 +1,14 @@
 
 #
-# PirObject definition file for a tRNA prediction
-# This object is used by tRNASpinner.
+# PirObject definition file for a RNA prediction
+# This object is used by RNAfinder.
 #
-#    $Id: RNAPrediction.pir,v 1.1 2008/10/28 21:57:23 nbeck Exp $
+#    $Id: RNAPrediction.pir,v 1.2 2009/07/21 15:58:18 nbeck Exp $
 #
 #    $Log: RNAPrediction.pir,v $
+#    Revision 1.2  2009/07/21 15:58:18  nbeck
+#    Fusion between RNASpinner and RNAfinder.
+#
 #    Revision 1.1  2008/10/28 21:57:23  nbeck
 #    Initial check-in.
 #.
@@ -33,7 +36,7 @@ align                   single          string          A condensed alignment re
 
 - Methods
 
-our $RCS_VERSION='$Id: RNAPrediction.pir,v 1.1 2008/10/28 21:57:23 nbeck Exp $';
+our $RCS_VERSION='$Id: RNAPrediction.pir,v 1.2 2009/07/21 15:58:18 nbeck Exp $';
 our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 # None of the moment.
