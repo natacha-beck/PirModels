@@ -3,9 +3,12 @@
 # This class contain hash of Item List for each RNA model
 #
 #
-# $Id: Item.pir,v 1.3 2009/07/24 22:01:09 nbeck Exp $
+# $Id: Item.pir,v 1.4 2009/08/20 21:31:25 nbeck Exp $
 #
 # $Log: Item.pir,v $
+# Revision 1.4  2009/08/20 21:31:25  nbeck
+# Added resume and NoSolution file.
+#
 # Revision 1.3  2009/07/24 22:01:09  nbeck
 # Added parallelization of erpin.
 #
@@ -36,4 +39,4 @@ erpinMaskNums           array           string          Mask number used by erpi
 ModelFile               single          string          Name of file contain non redundant model
 lowest                  single          int4            The lowest mask number used by erpin
 erpinOut                single          string          erpin outfile
-erpinErr                 single          string         erpin errfile
+erpinErr                single          string          erpin errfile
