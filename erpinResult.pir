@@ -20,4 +20,5 @@ Label                   single          string           Label name
 comment                 single          string           A comment
 modTab                  array           int4             number identification for module, can be a list of number
 Alignments              array           <erpinAlignment> Contain all information about each alignment
-OriSol                  single          int4            Nb of original solution
+OriSol                  single          int4             Nb of original solution
+time                    single          string           time for run erpin

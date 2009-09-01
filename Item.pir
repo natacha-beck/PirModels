@@ -3,9 +3,12 @@
 # This class contain hash of Item List for each RNA model
 #
 #
-# $Id: Item.pir,v 1.4 2009/08/20 21:31:25 nbeck Exp $
+# $Id: Item.pir,v 1.5 2009/09/01 21:03:48 nbeck Exp $
 #
 # $Log: Item.pir,v $
+# Revision 1.5  2009/09/01 21:03:48  nbeck
+# Some esthetic modification.
+#
 # Revision 1.4  2009/08/20 21:31:25  nbeck
 # Added resume and NoSolution file.
 #
@@ -40,3 +43,4 @@ ModelFile               single          string          Name of file contain non
 lowest                  single          int4            The lowest mask number used by erpin
 erpinOut                single          string          erpin outfile
 erpinErr                single          string          erpin errfile
+time                    single          string          time for run erpin
