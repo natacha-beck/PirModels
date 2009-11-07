@@ -3,9 +3,12 @@
 # This class contain hash of Item List for each RNA model
 #
 #
-# $Id: MenuList.pir,v 1.3 2009/08/06 21:03:05 nbeck Exp $
+# $Id: MenuList.pir,v 1.4 2009/11/07 00:21:40 nbeck Exp $
 #
 # $Log: MenuList.pir,v $
+# Revision 1.4  2009/11/07 00:21:40  nbeck
+# Changed output format.
+#
 # Revision 1.3  2009/08/06 21:03:05  nbeck
 # Fixed conflicts in RNAfinderFileForMenu.pir MenuList.pir
 #
@@ -25,6 +28,7 @@
 #---------------------- ---------------	---------------	-----------------------
 name                    single          string          Name of model
 Comment                 single          string          Comment for model
+Order                   single          int4            In order to sort RNA for output
 OriName                 single          string          Name of block in Menufile
 ModulList               hash            string          Modul list for each RNA
 Set                     hash            <ItemSet>       List of item block for each RNA

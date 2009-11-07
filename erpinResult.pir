@@ -22,3 +22,5 @@ modTab                  array           int4             number identification f
 Alignments              array           <erpinAlignment> Contain all information about each alignment
 OriSol                  single          int4             Nb of original solution
 time                    single          string           time for run erpin
+Order                   single          int4            In order to sort RNA for output
+
