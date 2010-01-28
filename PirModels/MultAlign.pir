@@ -1,9 +1,12 @@
 #
 # A simple containiner for a multiple alignment.
 #
-#  $Id: MultAlign.pir,v 1.3 2008/10/28 22:03:00 nbeck Exp $
+#  $Id: MultAlign.pir,v 1.4 2010/01/28 21:44:18 nbeck Exp $
 #
 #  $Log: MultAlign.pir,v $
+#  Revision 1.4  2010/01/28 21:44:18  nbeck
+#  Added support for Stockholm input.
+#
 #  Revision 1.3  2008/10/28 22:03:00  nbeck
 #  Add function to define consensus.
 #
@@ -19,13 +22,14 @@
 #---------------------- ---------------	---------------	-----------------------
 alignId			        single		string               # Optional; can be filename
 consensus               single      string               Consensus of aligned sequence
+PP_cons                 single      string               STOCKHOLM percent
 alignedSeqs		        array		<AlignedSeq>
 
 - EndFieldsTable
 
 - Methods
 
-our $RCS_VERSION='$Id: MultAlign.pir,v 1.3 2008/10/28 22:03:00 nbeck Exp $';
+our $RCS_VERSION='$Id: MultAlign.pir,v 1.4 2010/01/28 21:44:18 nbeck Exp $';
 our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 sub NumSequences {
