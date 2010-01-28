@@ -1,9 +1,12 @@
 #
 # A simple containiner for a sequence in a multiple alignment
 #
-#  $Id: AlignedSeq.pir,v 1.2 2008/08/20 19:43:22 riouxp Exp $
+#  $Id: AlignedSeq.pir,v 1.3 2010/01/28 21:44:18 nbeck Exp $
 #
 #  $Log: AlignedSeq.pir,v $
+#  Revision 1.3  2010/01/28 21:44:18  nbeck
+#  Added support for Stockholm input.
+#
 #  Revision 1.2  2008/08/20 19:43:22  riouxp
 #  Added CVS tracking variables.
 #
@@ -17,12 +20,13 @@
 seqId			single		string
 seqFastaRest		single		string
 sequence		single		string
+PP              single      string
 
 - EndFieldsTable
 
 - Methods
 
-our $RCS_VERSION='$Id: AlignedSeq.pir,v 1.2 2008/08/20 19:43:22 riouxp Exp $';
+our $RCS_VERSION='$Id: AlignedSeq.pir,v 1.3 2010/01/28 21:44:18 nbeck Exp $';
 our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 sub AsFasta {
