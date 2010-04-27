@@ -1,9 +1,12 @@
 #
 # A simple containiner for a sequence in a multiple alignment
 #
-#  $Id: AlignedSeq.pir,v 1.3 2010/01/28 21:44:18 nbeck Exp $
+#  $Id: AlignedSeq.pir,v 1.4 2010/04/27 20:53:36 nbeck Exp $
 #
 #  $Log: AlignedSeq.pir,v $
+#  Revision 1.4  2010/04/27 20:53:36  nbeck
+#  Fixed long name in stokholm.
+#
 #  Revision 1.3  2010/01/28 21:44:18  nbeck
 #  Added support for Stockholm input.
 #
@@ -17,16 +20,17 @@
 
 # Field name		Sing/Array/Hash	Type		Comments
 #---------------------- ---------------	---------------	-----------------------
-seqId			single		string
-seqFastaRest		single		string
-sequence		single		string
-PP              single      string
+shortSeqId              single      string
+seqId			        single		string
+seqFastaRest	    	single		string
+sequence	         	single		string
+PP                      single      string
 
 - EndFieldsTable
 
 - Methods
 
-our $RCS_VERSION='$Id: AlignedSeq.pir,v 1.3 2010/01/28 21:44:18 nbeck Exp $';
+our $RCS_VERSION='$Id: AlignedSeq.pir,v 1.4 2010/04/27 20:53:36 nbeck Exp $';
 our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 sub AsFasta {
