@@ -1,9 +1,12 @@
 #
 # A simple containiner for a sequence in a multiple alignment
 #
-#  $Id: AlignedSeq.pir,v 1.4 2010/04/27 20:53:36 nbeck Exp $
+#  $Id: AlignedSeq.pir,v 1.5 2010/08/13 15:48:27 nbeck Exp $
 #
 #  $Log: AlignedSeq.pir,v $
+#  Revision 1.5  2010/08/13 15:48:27  nbeck
+#  Fixed problem with "." in sequence, must be replaced by "-".
+#
 #  Revision 1.4  2010/04/27 20:53:36  nbeck
 #  Fixed long name in stokholm.
 #
@@ -30,7 +33,7 @@ PP                      single      string
 
 - Methods
 
-our $RCS_VERSION='$Id: AlignedSeq.pir,v 1.4 2010/04/27 20:53:36 nbeck Exp $';
+our $RCS_VERSION='$Id: AlignedSeq.pir,v 1.5 2010/08/13 15:48:27 nbeck Exp $';
 our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 sub AsFasta {
@@ -48,12 +51,14 @@ sub AsFasta {
         $rest = "";
     }
 
-    my $text = ">$id$rest\n";
+    my $fasta_seq  = "";
+    
     for (my $i=0;$i<length($seq);$i+=50) {
-        my $remain = length($seq) - $i;
-        $text .= substr($seq,$i, $remain < 50 ? $remain : 50)."\n";
+        my $remain  = length($seq) - $i;
+        $fasta_seq .= substr($seq,$i, $remain < 50 ? $remain : 50)."\n";
+        $fasta_seq =~ s/\./-/g;
     }
-
+    my $text = ">$id\n$fasta_seq\n";
     $text;
 }
 
