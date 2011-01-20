@@ -3,9 +3,12 @@
 # This class contain hash of Item List for each RNA model
 #
 #
-# $Id: Item.pir,v 1.5 2009/09/01 21:03:48 nbeck Exp $
+# $Id: Item.pir,v 1.6 2011/01/20 22:18:10 nbeck Exp $
 #
 # $Log: Item.pir,v $
+# Revision 1.6  2011/01/20 22:18:10  nbeck
+# Added function for model fusion (for tRNA).
+#
 # Revision 1.5  2009/09/01 21:03:48  nbeck
 # Some esthetic modification.
 #
@@ -44,3 +47,4 @@ lowest                  single          int4            The lowest mask number u
 erpinOut                single          string          erpin outfile
 erpinErr                single          string          erpin errfile
 time                    single          string          time for run erpin
+gaptoend                single          string          list of elements where gaps must be placed at the end

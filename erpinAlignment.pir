@@ -25,3 +25,6 @@ AliForAli               single          string          alignment used for .ali
 HeadForAli              single          string          header used for .ali
 AliForLog               single          string          alignment used for .log
 HeadForLog              single          string          header used for .log
+AliLogArray             array           string          log ali split in elem
+AliAliArray             array           string          ali ali split in elem
+FoundInSupModel         single          string          1 if ali was not found in general model
