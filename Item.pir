@@ -3,9 +3,12 @@
 # This class contain hash of Item List for each RNA model
 #
 #
-# $Id: Item.pir,v 1.6 2011/01/20 22:18:10 nbeck Exp $
+# $Id: Item.pir,v 1.7 2011/01/25 21:15:51 nbeck Exp $
 #
 # $Log: Item.pir,v $
+# Revision 1.7  2011/01/25 21:15:51  nbeck
+# Removed inclusion, added comments for MFannot, changed output format.
+#
 # Revision 1.6  2011/01/20 22:18:10  nbeck
 # Added function for model fusion (for tRNA).
 #
@@ -48,3 +51,4 @@ erpinOut                single          string          erpin outfile
 erpinErr                single          string          erpin errfile
 time                    single          string          time for run erpin
 gaptoend                single          string          list of elements where gaps must be placed at the end
+commentForMFa           single          string          comment for MFannot

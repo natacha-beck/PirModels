@@ -3,9 +3,12 @@
 # PirObject definition file for a RNA prediction
 # This object is used by RNAfinder.
 #
-#    $Id: RNAPrediction.pir,v 1.2 2009/07/21 15:58:18 nbeck Exp $
+#    $Id: RNAPrediction.pir,v 1.3 2011/01/25 21:15:51 nbeck Exp $
 #
 #    $Log: RNAPrediction.pir,v $
+#    Revision 1.3  2011/01/25 21:15:51  nbeck
+#    Removed inclusion, added comments for MFannot, changed output format.
+#
 #    Revision 1.2  2009/07/21 15:58:18  nbeck
 #    Fusion between RNASpinner and RNAfinder.
 #
@@ -31,12 +34,13 @@ anticodon_stop          single          int4            447
 anticodon_seq           single          string          anticodon "GCU" -> codon AGC (serine)
 label                   single          string          Indicate label it's use for Intron
 align                   single          string          A condensed alignment readable by human
+commentForMFa           single          string          comment for MFannot
 
 - EndFieldsTable
 
 - Methods
 
-our $RCS_VERSION='$Id: RNAPrediction.pir,v 1.2 2009/07/21 15:58:18 nbeck Exp $';
+our $RCS_VERSION='$Id: RNAPrediction.pir,v 1.3 2011/01/25 21:15:51 nbeck Exp $';
 our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 # None of the moment.
