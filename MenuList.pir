@@ -3,9 +3,12 @@
 # This class contain hash of Item List for each RNA model
 #
 #
-# $Id: MenuList.pir,v 1.5 2011/01/20 22:18:10 nbeck Exp $
+# $Id: MenuList.pir,v 1.6 2011/02/02 21:34:45 nbeck Exp $
 #
 # $Log: MenuList.pir,v $
+# Revision 1.6  2011/02/02 21:34:45  nbeck
+# Changed way to make models fusion, removed inclusion.
+#
 # Revision 1.5  2011/01/20 22:18:10  nbeck
 # Added function for model fusion (for tRNA).
 #
@@ -33,8 +36,7 @@ name                    single          string          Name of model
 Comment                 single          string          Comment for model
 Order                   single          int4            In order to sort RNA for output
 OriName                 single          string          Name of block in Menufile
-ToFus                   single          string          1 if model need to be fussionned else 0
-Inclusion               array           string          string 0 if non inclusion else for example "0>1"
+ToFus                   array           string          For example "0,1,tRNA" means that item 0 and 1 are joined and named tRNA for make more than 1 fusion put ";" between instruction "0,1,tRNA;2,3,tRNA2"
 ModulList               hash            string          Modul list for each RNA
 Set                     hash            <ItemSet>       List of item block for each RNA
 
