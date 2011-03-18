@@ -31,4 +31,4 @@ erpinMaskNums           array           int4             Elem searched by erpin
 modelFile               single          string           Model used in oredre to run erpin
 gaptoend                single          string           list of elements where gaps must be placed at the end
 commentForMFa           single          string           comment for MFannot
-
+toComment               single          int4             if startline need to be in comment in Masterfile

@@ -3,9 +3,12 @@
 # This class contain hash of Item List for each RNA model
 #
 #
-# $Id: Item.pir,v 1.7 2011/01/25 21:15:51 nbeck Exp $
+# $Id: Item.pir,v 1.8 2011/03/18 19:21:38 nbeck Exp $
 #
 # $Log: Item.pir,v $
+# Revision 1.8  2011/03/18 19:21:38  nbeck
+# Added option in order to annot gene in comment for AnnotPair.
+#
 # Revision 1.7  2011/01/25 21:15:51  nbeck
 # Removed inclusion, added comments for MFannot, changed output format.
 #
@@ -52,3 +55,4 @@ erpinErr                single          string          erpin errfile
 time                    single          string          time for run erpin
 gaptoend                single          string          list of elements where gaps must be placed at the end
 commentForMFa           single          string          comment for MFannot
+toComment               single          int4            if startline need to be in comment in Masterfile
