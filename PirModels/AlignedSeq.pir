@@ -1,21 +1,6 @@
 #
 # A simple containiner for a sequence in a multiple alignment
 #
-#  $Id: AlignedSeq.pir,v 1.5 2010/08/13 15:48:27 nbeck Exp $
-#
-#  $Log: AlignedSeq.pir,v $
-#  Revision 1.5  2010/08/13 15:48:27  nbeck
-#  Fixed problem with "." in sequence, must be replaced by "-".
-#
-#  Revision 1.4  2010/04/27 20:53:36  nbeck
-#  Fixed long name in stokholm.
-#
-#  Revision 1.3  2010/01/28 21:44:18  nbeck
-#  Added support for Stockholm input.
-#
-#  Revision 1.2  2008/08/20 19:43:22  riouxp
-#  Added CVS tracking variables.
-#
 
 - PerlClass	PirObject::AlignedSeq
 - InheritsFrom	PirObject
