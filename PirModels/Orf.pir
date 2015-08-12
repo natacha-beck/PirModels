@@ -5,8 +5,8 @@
 #
 
 
-- PerlClass	PirObject::Orf
-- InheritsFrom	PirObject
+- PerlClass PirObject::Orf
+- InheritsFrom  PirObject
 - FieldsTable
 
 # Field name            Struct  Type                Comments

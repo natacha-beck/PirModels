@@ -1,13 +1,14 @@
+
 #
 # A simple container for XML Blast Output; based on NCBI's DTD.
 #
 
-- PerlClass	PirObject::BlastOutput::Iteration::Hit::Hsp
-- InheritsFrom	PirObject
+- PerlClass PirObject::BlastOutput::Iteration::Hit::Hsp
+- InheritsFrom  PirObject
 - FieldsTable
 
-# Field name		Sing/Array/Hash	Type		Comments
-#---------------------- ---------------	---------------	-----------------------
+# Field name            Struct          Type            Comments
+#---------------------- --------------- --------------- -----------------------
 Hsp_num                 single          int8
 Hsp_bit-score           single          string
 Hsp_score               single          string
@@ -37,25 +38,25 @@ our $RCS_VERSION='$Id: Hsp.pir,v 1.3 2008/09/10 19:08:32 riouxp Exp $';
 our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 
 sub frac_identical { # as in BioPerl
-    my $self = shift;
+  my $self = shift;
 
-    my $id  = $self->get_Hsp_identity();
-    my $len = $self->get_Hsp_align_len() || 1;
+  my $id  = $self->get_Hsp_identity();
+  my $len = $self->get_Hsp_align_len() || 1;
 
-    return ($id/$len);
+  return ($id/$len);
 }
 
 sub significance {
-    my $self = shift;
-    $self->Hsp_evalue(@_);
+  my $self = shift;
+  $self->Hsp_evalue(@_);
 }
 
 sub start {
-    my $self = shift;
-    $self->Hsp_query_from(@_);
+  my $self = shift;
+  $self->Hsp_query_from(@_);
 }
 
 sub end {
-    my $self = shift;
-    $self->Hsp_query_to(@_);
+  my $self = shift;
+  $self->Hsp_query_to(@_);
 }

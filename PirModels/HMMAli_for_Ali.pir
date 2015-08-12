@@ -3,12 +3,12 @@
 # Used in order to parse alignement output of HMMsearch.
 #
 
-- PerlClass	PirObject::HMMAli_for_Ali
-- InheritsFrom	PirObject
+- PerlClass PirObject::HMMAli_for_Ali
+- InheritsFrom  PirObject
 - FieldsTable
 
-# Field name		    Sing/Array/Hash	Type		     Comments
-#---------------------- ---------------	---------------	 -----------------------
+# Field name            Struct          Type             Comments
+#---------------------- --------------- ---------------  -----------------------
 id                      single          string           identification name
 header                  single          string           full header
 start_ori               single          int4             original start found in default hmmsearch

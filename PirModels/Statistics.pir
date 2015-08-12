@@ -1,13 +1,14 @@
+
 #
 # A simple container for XML Blast Output; based on NCBI's DTD.
 #
 
-- PerlClass	PirObject::BlastOutput::Iteration::Statistics
-- InheritsFrom	PirObject
+- PerlClass PirObject::BlastOutput::Iteration::Statistics
+- InheritsFrom  PirObject
 - FieldsTable
 
-# Field name		Sing/Array/Hash	Type		Comments
-#---------------------- ---------------	---------------	-----------------------
+# Field name            Struct          Type            Comments
+#---------------------- --------------- --------------- -----------------------
 Statistics_db-num       single          int8
 Statistics_db-len       single          int8
 Statistics_hsp-len      single          int8
@@ -22,4 +23,3 @@ Statistics_entropy      single          string
 
 our $RCS_VERSION='$Id: Statistics.pir,v 1.2 2008/08/20 19:43:23 riouxp Exp $';
 our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
-

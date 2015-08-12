@@ -3,15 +3,15 @@
 # This is an object that can store the information about homologous protein identified by Blast
 #
 
-- PerlClass	PirObject::Homologous
-- InheritsFrom	PirObject
+- PerlClass PirObject::Homologous
+- InheritsFrom  PirObject
 - FieldsTable
 
-# Field name		Struct	Type		    Comments
-#----------------------	-------	------------------- -----------------------
-similarprot 		single	string		    homologous protein
-evalue		        single	string          E-Value given by Blast
-origine             single  string          Define gene origine can be pt,pt_cyano,mt,mt_alpha.
+# Field name             Struct  Type            Comments
+#---------------------- -------  --------------- -----------------------
+similarprot              single  string          homologous protein
+evalue                   single  string          E-Value given by Blast
+origine                  single  string          Define gene origine can be pt,pt_cyano,mt,mt_alpha.
 
 - EndFieldsTable
 

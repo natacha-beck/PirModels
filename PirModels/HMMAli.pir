@@ -7,7 +7,7 @@
 - InheritsFrom  PirObject
 - FieldsTable
 
-# Field name            Sing/Array/Hash Type            Comments
+# Field name            Struct          Type            Comments
 #---------------------- --------------- --------------- -----------------------
 id                      single          int4            identification number
 score                   single          int4            score
@@ -34,4 +34,3 @@ SeqIdAndDesc            single          string          sequence identifier and 
 
 our $RCS_VERSION='$Id: HMMAli.pir,v 1.4 2012/01/21 20:48:19 nbeck Exp $';
 our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
-

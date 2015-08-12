@@ -1,13 +1,14 @@
+
 #
 # A simple container for XML Blast Output; based on NCBI's DTD.
 #
 
-- PerlClass	PirObject::BlastOutput
-- InheritsFrom	PirObject
+- PerlClass PirObject::BlastOutput
+- InheritsFrom  PirObject
 - FieldsTable
 
-# Field name		Sing/Array/Hash	Type		Comments
-#---------------------- ---------------	---------------	-----------------------
+# Field name            Struct          Type            Comments
+#---------------------- --------------- --------------- -----------------------
 BlastOutput_program     single          string
 BlastOutput_version     single          string
 BlastOutput_reference   single          string

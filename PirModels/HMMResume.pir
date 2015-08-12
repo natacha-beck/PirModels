@@ -3,12 +3,12 @@
 # Parser for HMM result.
 #
 
-- PerlClass	PirObject::HMMResume
-- InheritsFrom	PirObject
+- PerlClass PirObject::HMMResume
+- InheritsFrom  PirObject
 - FieldsTable
 
-# Field name		    Sing/Array/Hash	Type		    Comments
-#---------------------- ---------------	---------------	-----------------------
+# Field name            Struct          Type            Comments
+#---------------------- --------------- --------------- -----------------------
 fEvalue                 single          int4            full evalue
 fScore                  single          int4            full score
 fBias                   single          int4            full bias

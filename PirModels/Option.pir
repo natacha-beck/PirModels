@@ -3,12 +3,12 @@
 # A module for processing options
 #
 
-- PerlClass	PirObject::Option
-- InheritsFrom	PirObject
+- PerlClass PirObject::Option
+- InheritsFrom  PirObject
 - FieldsTable
 
 # Field name            Struct   Type               Comments
-#----------------------	-------	------------------- -----------------------
+#---------------------- ------- ------------------- -----------------------
 outputfile              single  string              A new outputfile for the masterfile (option -o)
 pepdirectory            single  string              A peptide directory for the closest organism
 genetic                 single  int4                A number representing the genetic code used (option -g)
@@ -349,9 +349,9 @@ sub FillOption {
                          "minis:f"          => \$opts{'minintronsize'},   # The minimum intron size allowed      
                          "minexonsize:f"    => \$opts{'minexonsize'},     # The minimum exon size allowed
                          "mines:f"          => \$opts{'minexonsize'},     # The minimum exon size allowed
-                         "ext_config:s"	    => \$opts{'ext_config'},      # The Path of ext_config
-                         "ext_select:s"     => \$opts{'ext_select'},	  # The list of genes
-                         "lvlintron:i"      => \$opts{'lvlintron'},	      # 1 or 2 indicate lvl of introns identification
+                         "ext_config:s"     => \$opts{'ext_config'},      # The Path of ext_config
+                         "ext_select:s"     => \$opts{'ext_select'},    # The list of genes
+                         "lvlintron:i"      => \$opts{'lvlintron'},       # 1 or 2 indicate lvl of introns identification
                          "partial"          => \$opts{'partial'},         # This will cause mfannot to only run a subset of all its built-in analysis
                          "a:s"              => \$opts{'a'},               # mail
                          "T:s"              => \$opts{'T'},               # tmp dir
@@ -540,7 +540,7 @@ sub FillOption {
        &ExitWithUsage
    }
    
-   ### other options process	   	   
+   ### other options process         
    # Log file processing, an other option just telling you if a logfile name is defined
    $self->logfile ne "" ? $self->set_islogfile (1) : $self->set_islogfile (0);
    # Outputfile option process

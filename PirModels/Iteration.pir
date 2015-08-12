@@ -1,13 +1,14 @@
+
 #
 # A simple container for XML Blast Output; based on NCBI's DTD.
 #
 
-- PerlClass	PirObject::BlastOutput::Iteration
-- InheritsFrom	PirObject
+- PerlClass PirObject::BlastOutput::Iteration
+- InheritsFrom  PirObject
 - FieldsTable
 
-# Field name		Sing/Array/Hash	Type		Comments
-#---------------------- ---------------	---------------	-----------------------
+# Field name            Struct          Type            Comments
+#---------------------- --------------- --------------- -----------------------
 Iteration_iter-num      single          int8
 Iteration_query-ID      single          string
 Iteration_query-def     single          string

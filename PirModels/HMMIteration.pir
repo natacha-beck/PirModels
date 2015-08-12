@@ -7,7 +7,7 @@
 - InheritsFrom  PirObject
 - FieldsTable
 
-# Field name            Sing/Array/Hash Type            Comments
+# Field name            Struct          Type            Comments
 #---------------------- --------------- --------------- -----------------------
 number                  single          int4            Which iteration
 NbResUpperTresh         single          int4            number of resume with treshold upper cutoff
@@ -24,7 +24,6 @@ McSec                   single          string
 IncludedMSA             single          string
 ModelSize               single          string
 resume                  array           <HMMResume>
-
 
 - EndFieldsTable
 

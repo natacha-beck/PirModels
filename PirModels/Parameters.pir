@@ -1,13 +1,14 @@
+
 #
 # A simple container for XML Blast Output; based on NCBI's DTD.
 #
 
-- PerlClass	PirObject::BlastOutput::Parameter
-- InheritsFrom	PirObject
+- PerlClass PirObject::BlastOutput::Parameter
+- InheritsFrom  PirObject
 - FieldsTable
 
-# Field name		Sing/Array/Hash	Type		Comments
-#---------------------- ---------------	---------------	-----------------------
+# Field name            Struct          Type            Comments
+#---------------------- --------------- --------------- -----------------------
 Parameters_matrix       single          string
 Parameters_expect       single          string
 Parameters_include      single          string
