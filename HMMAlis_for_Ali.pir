@@ -72,28 +72,12 @@ sub FillFeaturesFromTextOutput {
   
   my $All_ali = [];
   foreach my $key (keys %$Each_ali) {
-    my $Info = $Each_ali->{$key};
-    my $dash_before = "";
-       $dash_before = $1 if $Info->{ali} =~ m/^(-+)/;
-    my $nb_dash_before = length($dash_before);
-    my $start_wo_dash  = $Each_ali->{$key}->{start};
-    if ($nb_dash_before != 0 ){
-      $start_wo_dash = $start_wo_dash - $nb_dash_before;
-    }
-    
-    my $dash_after  = "";
-       $dash_after  = $1 if $Info->{ali} =~ m/(-+)$/;
-    my $nb_dash_after  = length($dash_after);
-    my $end_wo_dash  = $Each_ali->{$key}->{end};
-      if ($nb_dash_after != 0 ){
-      $end_wo_dash = $end_wo_dash + $nb_dash_after;
-    }
     my $ali = new PirObject::HMMAli_for_Ali ( id        => $Each_ali->{$key}->{id},
                           header    => $Each_ali->{$key}->{header},
                           start_ori => $Each_ali->{$key}->{start},
-                          start     => $start_wo_dash,
+                          start     => $Each_ali->{$key}->{start}, 
                           end_ori   => $Each_ali->{$key}->{end},
-                          end       => $end_wo_dash,
+                          end       => $Each_ali->{$key}->{end},
                           ali_seq   => $Each_ali->{$key}->{ali},
                           ali_hmm   => $Each_ali->{$key}->{hmm},
                         );
