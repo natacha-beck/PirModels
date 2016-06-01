@@ -36,7 +36,8 @@ lvlintron               single  int4                Indicate level of intron ide
 motfile                 single  string              File of configuration for research of motifs.
 lvlmot                  single  int4                Indicate level of motif identification.
 tmpdir                  single  string              Define the temporary work directory.
-mail                    single  string              Define mail adress in order to send result.
+light                   single  int4                Don't run HMMer for all not found gene and don't seartch endonuclease
+sqnformat               single  int4                If set perform mf -> sqn conversion 
 prm                     single  int4                Define if prot.prm file must be used or not.
 
 - EndFieldsTable
@@ -131,6 +132,9 @@ Available options :
               This option allows the user to log the state of mfannot into a user
               chosen file.
     
+    --light   Don't perfrom endonuclease search, and don't search for all gene by HMM.
+              It's a boolean value just set or not. Default: false  
+  
     --matrix  This allows the user to choose which alignment matrix is used
               during the blast. 
 
@@ -200,6 +204,8 @@ Available options :
               Must be used when the genome his known to be partial or incomplete;
               this will cause mfannot to only run a subset of all its built-in analysis.'
               
+    --sqn     Produce a sqn format file. Default: false  
+
     --T       Define the temporary work directory.
               
     --lvlintron
@@ -350,10 +356,11 @@ sub FillOption {
                          "minexonsize:f"    => \$opts{'minexonsize'},     # The minimum exon size allowed
                          "mines:f"          => \$opts{'minexonsize'},     # The minimum exon size allowed
                          "ext_config:s"     => \$opts{'ext_config'},      # The Path of ext_config
-                         "ext_select:s"     => \$opts{'ext_select'},    # The list of genes
+                         "ext_select:s"     => \$opts{'ext_select'},      # The list of genes
                          "lvlintron:i"      => \$opts{'lvlintron'},       # 1 or 2 indicate lvl of introns identification
                          "partial"          => \$opts{'partial'},         # This will cause mfannot to only run a subset of all its built-in analysis
-                         "a:s"              => \$opts{'a'},               # mail
+                         "light"            => \$opts{'light'},           # light version don't search for endo and for all gene
+                         "sqnformat"        => \$opts{'sqn'},             # Convert mf -> sqn
                          "T:s"              => \$opts{'T'},               # tmp dir
                          "motfile:s"        => \$opts{'motfile'},         # The path of .motsearch.pat
                          "lvlmot:i"         => \$opts{'lvlmot'}           # 0,1 or 2 indicate lvl of motifs identification
@@ -482,15 +489,9 @@ sub FillOption {
        }
    }
    
-   if (defined $opts{'a'}) {
-       if ($opts{'a'} eq "") {    # if the option is not given
-           print "mail not given\n";
-       }
-       else {
-           $self->set_mail ($opts{'a'}) 
-       }
-   }
-   
+   $self->set_light (1)   if defined ($opts{'light'});
+   $self->set_sqnformat (1) if defined ($opts{'sqn'});  
+ 
    if (defined $opts{'T'}) {
        if ($opts{'T'} eq "") {    # if the option is not given
            print "TMP dir not given\n";
