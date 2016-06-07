@@ -1,6 +1,6 @@
 
 #
-# A simple containiner for a sequence in a multiple alignment
+# A simple container for a sequence in a multiple alignment
 #
 
 - PerlClass PirObject::AlignedSeq
