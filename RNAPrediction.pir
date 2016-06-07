@@ -3,19 +3,7 @@
 # PirObject definition file for a RNA prediction
 # This object is used by RNAfinder.
 #
-#    $Id: RNAPrediction.pir,v 1.3 2011/01/25 21:15:51 nbeck Exp $
-#
-#    $Log: RNAPrediction.pir,v $
-#    Revision 1.3  2011/01/25 21:15:51  nbeck
-#    Removed inclusion, added comments for MFannot, changed output format.
-#
-#    Revision 1.2  2009/07/21 15:58:18  nbeck
-#    Fusion between RNASpinner and RNAfinder.
-#
-#    Revision 1.1  2008/10/28 21:57:23  nbeck
-#    Initial check-in.
-#.
-#
+
 
 - PerlClass	PirObject::RNAPrediction
 - InheritsFrom	PirObject

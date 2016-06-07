@@ -1,22 +1,8 @@
+
 #
 # RawDiskSeqs: an object that represents a collection of biological
 # sequences on disk in RAW byte format; useful to maintain large
 # genomes where you want to be able to extract any subseq.
-#
-#    $Id: RawDiskSeqs.pir,v 1.2 2008/08/20 19:43:22 riouxp Exp $
-#
-#    $Log: RawDiskSeqs.pir,v $
-#    Revision 1.2  2008/08/20 19:43:22  riouxp
-#    Added CVS tracking variables.
-#
-#    Revision 1.1  2007/07/11 19:55:18  riouxp
-#    New project. Initial check-in.
-#
-#    Added Files:
-#        HMMweasel
-#        HMMER2SearchEngine.pir LinStruct.pir PotentialResult.pir
-#        RawDiskSeqs.pir RawSeq.pir ResultElement.pir SearchEngine.pir
-#        SimpleHit.pir SimpleHitList.pir StructElem.pir
 #
 
 - PerlClass	PirObject::RawDiskSeqs
@@ -25,7 +11,7 @@
 
 # Field name		Sing/Array/Hash	Type		Comments
 #---------------------- ---------------	---------------	-----------------------
-fastafilename		single		string		
+fastafilename		single		string
 fastamd5                single          string
 fastaorigsize           single          int4
 rawseqs                 array           <RawSeq>

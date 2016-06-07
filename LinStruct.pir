@@ -1,3 +1,4 @@
+
 #
 # Linear structure for molecular seq e.g
 #
@@ -9,50 +10,6 @@
 # ......(((((.....)))))....
 #
 # all properly parsed and packaged in neat objects.
-#
-#    $Id: LinStruct.pir,v 1.10 2008/08/20 19:43:22 riouxp Exp $
-#
-#    $Log: LinStruct.pir,v $
-#    Revision 1.10  2008/08/20 19:43:22  riouxp
-#    Added CVS tracking variables.
-#
-#    Revision 1.9  2008/08/01 20:58:08  riouxp
-#    Improved detection of file vs filehandle.
-#
-#    Revision 1.8  2008/08/01 18:55:23  riouxp
-#    Added ability to load a multalign from a filehandle
-#    instead of just a filename. This allows you to bypass the
-#    need for the "umac" external executable, if necessary.
-#
-#    Revision 1.7  2008/03/04 18:05:30  riouxp
-#    Fixed syntax bug.
-#
-#    Revision 1.6  2008/03/04 18:02:35  riouxp
-#    Adjusted multalign parser to ignore non-significant blank spaces.
-#
-#    Revision 1.5  2008/02/27 19:04:32  riouxp
-#    Fixed the previous fix.
-#
-#    Revision 1.4  2008/02/27 18:46:03  riouxp
-#    Handle situation when importing a struct+multalign file where
-#    there are no multalign at all.
-#
-#    Revision 1.3  2007/07/18 21:24:14  riouxp
-#    Added support for reading from a multiple alignment (and storing
-#    the mutliple alignment itself).
-#
-#    Revision 1.2  2007/07/16 00:13:37  riouxp
-#    HMMweasel: added -L option. HMMweasel and LinStruct: added support
-#    for structure entries in a single line, such as "---AAAbbb---CCAAA---".
-#
-#    Revision 1.1  2007/07/11 19:55:18  riouxp
-#    New project. Initial check-in.
-#
-#    Added Files:
-#        HMMweasel
-#        HMMER2SearchEngine.pir LinStruct.pir PotentialResult.pir
-#        RawDiskSeqs.pir RawSeq.pir ResultElement.pir SearchEngine.pir
-#        SimpleHit.pir SimpleHitList.pir StructElem.pir
 #
 
 - PerlClass	PirObject::LinStruct

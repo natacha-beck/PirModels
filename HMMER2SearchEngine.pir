@@ -1,52 +1,6 @@
+
 #
 # Implements SearchEngine for HMMER2
-#
-#    $Id: HMMER2SearchEngine.pir,v 1.11 2009/05/28 15:47:25 riouxp Exp $
-#
-#    $Log: HMMER2SearchEngine.pir,v $
-#    Revision 1.11  2009/05/28 15:47:25  riouxp
-#    Made sure mode 777 used for cached HMM file.
-#
-#    Revision 1.10  2009/05/27 21:56:46  riouxp
-#    Added ability to cache HMMs in a directory specified by the environment
-#    variable $HMMWEASEL_CACHEDIR.
-#
-#    Revision 1.9  2009/01/15 23:54:59  riouxp
-#    Added transparent support for caching calibrated HMMs. The cache
-#    directory must be created first (default, "HOME/.HMMweasel.cache").
-#    Added option -C to change the cache directory location.
-#
-#    Revision 1.8  2008/08/20 19:43:22  riouxp
-#    Added CVS tracking variables.
-#
-#    Revision 1.7  2007/08/23 17:50:33  riouxp
-#    Fixed bug when searcging with a MINUS strand HMM.
-#
-#    Revision 1.6  2007/07/13 21:44:50  riouxp
-#    Improved time reporting.
-#
-#    Revision 1.5  2007/07/13 21:14:00  riouxp
-#    Added timing info, for better logging.
-#
-#    Revision 1.4  2007/07/12 23:01:18  riouxp
-#    Fixed bug with HMMbuild options.
-#
-#    Revision 1.3  2007/07/12 20:22:46  riouxp
-#    Added new output parser that extract the alignment sequences.
-#    Added options to hmmbuild to make sure all columns supplied
-#    are considered significant (--fast --gapmax 1).
-#
-#    Revision 1.2  2007/07/11 22:08:27  riouxp
-#    Fixed bug with empty internal elements.
-#
-#    Revision 1.1  2007/07/11 19:55:17  riouxp
-#    New project. Initial check-in.
-#
-#    Added Files:
-#        HMMweasel
-#        HMMER2SearchEngine.pir LinStruct.pir PotentialResult.pir
-#        RawDiskSeqs.pir RawSeq.pir ResultElement.pir SearchEngine.pir
-#        SimpleHit.pir SimpleHitList.pir StructElem.pir
 #
 
 - PerlClass	PirObject::SearchEngine::HMMER2SearchEngine
@@ -274,7 +228,7 @@ sub _ParseHMMSearchResult { # Not a complete importer; not a method
         # Extract alignment paragraph
         my @paragraph=();
         push(@paragraph,shift(@$txt))
-            while @$txt && 
+            while @$txt &&
             $txt->[0] !~ m#domain\s*\d+\s*of\s*\d+|^Histogram|^% Statistical|^Total sequences#;
 
         # Extract aligned sequence from paragraph

@@ -2,29 +2,6 @@
 #
 # This class contain hash of Item List for each RNA model
 #
-#
-# $Id: MenuList.pir,v 1.6 2011/02/02 21:34:45 nbeck Exp $
-#
-# $Log: MenuList.pir,v $
-# Revision 1.6  2011/02/02 21:34:45  nbeck
-# Changed way to make models fusion, removed inclusion.
-#
-# Revision 1.5  2011/01/20 22:18:10  nbeck
-# Added function for model fusion (for tRNA).
-#
-# Revision 1.4  2009/11/07 00:21:40  nbeck
-# Changed output format.
-#
-# Revision 1.3  2009/08/06 21:03:05  nbeck
-# Fixed conflicts in RNAfinderFileForMenu.pir MenuList.pir
-#
-# Revision 1.2  2009/07/23 19:36:00  nbeck
-# Added -c Option, and change Usage.
-#
-# Revision 1.1  2009/07/21 15:58:18  nbeck
-# Fusion between RNASpinner and RNAfinder.
-#
-#
 
 - PerlClass	PirObject::MenuList
 - InheritsFrom	PirObject

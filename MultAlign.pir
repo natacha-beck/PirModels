@@ -1,17 +1,6 @@
+
 #
 # A simple containiner for a multiple alignment.
-#
-#  $Id: MultAlign.pir,v 1.4 2010/01/28 21:44:18 nbeck Exp $
-#
-#  $Log: MultAlign.pir,v $
-#  Revision 1.4  2010/01/28 21:44:18  nbeck
-#  Added support for Stockholm input.
-#
-#  Revision 1.3  2008/10/28 22:03:00  nbeck
-#  Add function to define consensus.
-#
-#  Revision 1.2  2008/08/20 19:43:22  riouxp
-#  Added CVS tracking variables.
 #
 
 - PerlClass	PirObject::MultAlign
@@ -86,13 +75,13 @@ sub get_consensus {
 
 sub MakeConsensus {
     my $self = shift;
-    
+
     my $alignedSeqs       = $self->get_alignedSeqs();
     my $Info_for_each_pos = {};
     my $align_len         = $self->AlignmentLength();
     my $consensus         = "";
     my $nb_ali            = 0;
-    
+
     foreach my $aligned_seq (@$alignedSeqs) {
         my $seq = $aligned_seq->get_sequence();
            $seq = uc($seq);
@@ -103,7 +92,7 @@ sub MakeConsensus {
         }
         $nb_ali++;
     }
-    
+
     for (my $i = 0; $i < $align_len; $i++ ) {
         my $nt_for_this_pos = $Info_for_each_pos->{$i};
         my $nt_max    = "";

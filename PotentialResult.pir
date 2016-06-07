@@ -1,37 +1,8 @@
+
 #
 # A structure for maintaining a potential result
 #
-#    $Id: PotentialResult.pir,v 1.6 2008/08/20 19:43:22 riouxp Exp $
-#
-#    $Log: PotentialResult.pir,v $
-#    Revision 1.6  2008/08/20 19:43:22  riouxp
-#    Added CVS tracking variables.
-#
-#    Revision 1.5  2007/07/20 17:44:44  riouxp
-#    Added support to detect and eliminate results that are
-#    substantially the same.
-#
-#    Revision 1.4  2007/07/19 18:27:38  riouxp
-#    moved elementlist to end of object definition. Added FASTA dump support
-#    and a utility routine to get the set of star/stop pairs for each piece
-#    of a solution in pieces.
-#
-#    Revision 1.3  2007/07/18 21:25:06  riouxp
-#    Added methods and fields needed to build solutions made from pieces of
-#    other solutions (for HWcombiner).
-#
-#    Revision 1.2  2007/07/12 20:21:24  riouxp
-#    Added field for FASTA reporting.
-#
-#    Revision 1.1  2007/07/11 19:55:18  riouxp
-#    New project. Initial check-in.
-#
-#    Added Files:
-#        HMMweasel
-#        HMMER2SearchEngine.pir LinStruct.pir PotentialResult.pir
-#        RawDiskSeqs.pir RawSeq.pir ResultElement.pir SearchEngine.pir
-#        SimpleHit.pir SimpleHitList.pir StructElem.pir
-#
+
 
 - PerlClass	PirObject::PotentialResult
 - InheritsFrom	PirObject
@@ -211,7 +182,7 @@ sub IsSubstantiallyTheSameAs {
     my $self  = shift;
     my $other = shift || die "Need other object to compare to.\n";
 
-    my $class    = ref($self) || 
+    my $class    = ref($self) ||
         die "This is an instance method.\n";
 
     die "Other object is not of the same class as self!?\n"

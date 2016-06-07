@@ -1,24 +1,11 @@
+
 #
 # This class is an abstract PirObject class for
 # searching an arbitrary genomic element with some
 # search engine; subclasses should provided the necessary
 # method to implement the search uging the API defined here.
 #
-#    $Id: SearchEngine.pir,v 1.2 2008/08/20 19:43:22 riouxp Exp $
-#
-#    $Log: SearchEngine.pir,v $
-#    Revision 1.2  2008/08/20 19:43:22  riouxp
-#    Added CVS tracking variables.
-#
-#    Revision 1.1  2007/07/11 19:55:18  riouxp
-#    New project. Initial check-in.
-#
-#    Added Files:
-#        HMMweasel
-#        HMMER2SearchEngine.pir LinStruct.pir PotentialResult.pir
-#        RawDiskSeqs.pir RawSeq.pir ResultElement.pir SearchEngine.pir
-#        SimpleHit.pir SimpleHitList.pir StructElem.pir
-#
+
 
 - PerlClass	PirObject::SearchEngine
 - InheritsFrom	PirObject

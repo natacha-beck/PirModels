@@ -1,28 +1,9 @@
+
 #
 # A structure for maintaining the information about a single
 # molecular sequence that is part of a RawDiskSeqs collection
 #
-#    $Id: RawSeq.pir,v 1.4 2008/08/20 19:43:22 riouxp Exp $
-#
-#    $Log: RawSeq.pir,v $
-#    Revision 1.4  2008/08/20 19:43:22  riouxp
-#    Added CVS tracking variables.
-#
-#    Revision 1.3  2007/07/13 20:48:59  riouxp
-#    Added field for maintaining parent's FASTA header line.
-#
-#    Revision 1.2  2007/07/11 22:08:27  riouxp
-#    Fixed bug with empty internal elements.
-#
-#    Revision 1.1  2007/07/11 19:55:18  riouxp
-#    New project. Initial check-in.
-#
-#    Added Files:
-#        HMMweasel
-#        HMMER2SearchEngine.pir LinStruct.pir PotentialResult.pir
-#        RawDiskSeqs.pir RawSeq.pir ResultElement.pir SearchEngine.pir
-#        SimpleHit.pir SimpleHitList.pir StructElem.pir
-#
+
 
 - PerlClass	PirObject::RawSeq
 - InheritsFrom	PirObject
