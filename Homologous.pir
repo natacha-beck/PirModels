@@ -12,6 +12,7 @@
 similarprot              single  string          homologous protein
 evalue                   single  string          E-Value given by Blast
 origine                  single  string          Define gene origine can be pt,pt_cyano,mt,mt_alpha.
+shortname                single  string          A short (e.g a letter) used for HMM for example
 
 - EndFieldsTable
 
