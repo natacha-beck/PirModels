@@ -301,8 +301,8 @@ sub FillOption {
    $self->set_genetic (1);
    $self->set_insertion (10);
    $self->set_logfile (""); 
-   $self->set_flip2 (40);
-   $self->set_blast2 ("1e-10");       
+   $self->set_flip2 (30);
+   $self->set_blast2 ("1e-9");       
    $self->set_debug (0);
    $self->set_prm(0);
    $self->set_minlenemptyorf (300);  # in nt
