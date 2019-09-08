@@ -68,7 +68,7 @@ Available options :
     --blast   Blast e-value cutoff
               This option allows the user to set the minimum signifiant e-value
               for ORF threshold.
-              Default: 1e-10
+              Default: 1e-9
     
     -d, --debug
               Use debugging mode. Print debugging information
@@ -167,7 +167,7 @@ Available options :
               This option allows the user to choose the size of the minumum ORFs
               (in amino acids) that are produced using Flip. This value must be
               an integer.
-              Default: 40
+              Default: 30
     
     -o, --outputfile  outputfile
               This is name of the new masterfile to be created. The default
