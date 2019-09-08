@@ -47,7 +47,8 @@ AnnotFusion             single  <AnnotPair>         AP for gene fusion.
 NotToAnnot              single  int4                1 if HP is not to annot 2 if HP must be comment else 0.
 HPOverlaps              array   string              List of OV HP.
 origine                 single  string              Define gene origine can be pt,pt_cyano,mt,mt_alpha.
-trimIndex              single  int4                Define the lenght of trimed sequence in HMM align in 5'
+trimIndexFive           single  int4                Define the lenght of trimed sequence in HMM align in 5'
+trimIndexThree          single  int4                Define the length of trimed sequence in HMM align in 3'
 
 - EndFieldsTable
 
