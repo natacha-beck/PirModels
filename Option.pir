@@ -309,7 +309,7 @@ sub FillOption {
    $self->set_debug (0);
    $self->set_prm(0);
    $self->set_minlenemptyorf (300);  # in nt
-   $self->set_overlappingcutoff  (30);
+   $self->set_overlappingcutoff  (40);
    $self->set_orfOVorf  (300);
    $self->set_orfOVgene (200);
    $self->set_orf (1);
