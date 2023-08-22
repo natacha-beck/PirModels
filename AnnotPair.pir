@@ -40,7 +40,7 @@ idbyHMM                 single          int4            1 if annotation is make 
 idbyRNA                 single          int4            1 if annotation is make from RNAweasel result.
 isIntronic              single          int4            1 if gene is an intronic gene.
 RNAcomment              single          string          comment given by RNAfinder
-altexons                array           <AnnotPair>     list of AP alternatif exon only for G.                
+altexons                array           <AnnotPair>     list of AP alternatif exon only for G.
 exoscore                single          int4            raw score defined by exonerate
 possStart               array           string          List of possible start.
 isFusioned              single          int4            0 no fusion, 1 fusion.

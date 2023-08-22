@@ -114,11 +114,11 @@ sub ImportFromTextFile {
         $count_line++;
 
         my $List = new PirObject::MenuList(
-            Set     => {},
-            OriName => $name,
-            Comment => $ModelComment,
-            Order   => $Order,
-            ToFus   => $arrayToFus,
+            Set      => {},
+            OriName  => $name,
+            Comment  => $ModelComment,
+            Order    => $Order,
+            ToFus    => $arrayToFus,
         );
 
         my $ItemSet = $List->get_Set();
