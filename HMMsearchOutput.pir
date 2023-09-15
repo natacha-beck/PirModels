@@ -21,16 +21,16 @@ our ($VERSION) = ($RCS_VERSION =~ m#,v ([\w\.]+)#);
 sub FillFeaturesFromTextOutput {
   my $self     = shift;
   my $tab      = shift;
-  
-  
+
+
   my $resume  = ();
   my @hitinfo = ();
   my %hitinfo = ();
-  
+
   my $isRes  = 0;
   my $isAli  = 0;
   my $isStat = 0;
-  
+
   my $Iteration       = new PirObject::HMMIteration();
   my $Iterations      = [];
   my $Resumes         = [];
@@ -51,7 +51,7 @@ sub FillFeaturesFromTextOutput {
       $line =~ s/^\+//;
       $line =~ s/^\s+//;
       my @info = split(/\s+/,$line);
-      my ($f_evalue,$f_score,$f_bias,$b_evalue,$b_score,$b_bias,$exp,$n,$name) 
+      my ($f_evalue,$f_score,$f_bias,$b_evalue,$b_score,$b_bias,$exp,$n,$name)
         = ($info[0],$info[1],$info[2],$info[3],$info[4],$info[5],$info[6],$info[7],$info[8]);
       my $len_info = scalar(@info) - 1;
       my $desc = join( ' ', @info[9..$len_info] );
@@ -74,14 +74,14 @@ sub FillFeaturesFromTextOutput {
       push @hitinfo, [ $name, $desc, $f_evalue, $f_score ];
       $hitinfo{$name} = $#hitinfo;
     }
-        
+
     $isAli = 1 if $line =~ m/^Domain\s+annotation\s+for/;
     next if $line =~ m/^Domain\s+annotation\s+for/;
     if ($isAli) {
       $isAli = 0 if $line =~ m/^Internal\s+pipeline\s+statistics\s+summary/;
       next if $line =~ m/acc$/ || $line =~ m/^\s*---/;
       push(@$ali_lines,$line);
-      
+
       if ($line =~ m/^>>/) {
         $line =~ s/^>>\s+//;
         my @info = split(/\s+/, $line);
@@ -95,11 +95,11 @@ sub FillFeaturesFromTextOutput {
         my @info = split(/\s+/,$line);
         my ($d_num,$d_indic,$d_score,$d_bias,$d_cvalue,$d_ivalue,$d_hmmfrom,$d_hmmto,
           $d_hmmbra,$d_alifrom,$d_alito,$d_alibra,$d_envfrom,$d_envto,$d_envbra,$d_acc) = @info;
-        
+
         my $HMMAli = new PirObject::HMMAli();
       }
     }
-    
+
     $isStat = 1 if ($line =~ m/^Internal\s+pipeline\s+statistics\s+summary/);
     next if ($line =~ m/^Internal\s+pipeline\s+statistics\s+summary/);
     if ($isStat == 1) {
@@ -121,7 +121,7 @@ sub FillFeaturesFromTextOutput {
       if ($line =~ m/^\#\s+Mc\/sec:\s+(.+)/){
         my $all_alignments = &TreatAlignment($ali_lines);
         &AddAliToResume($all_alignments,$Resumes);
-        $Iteration->set_resume($Resumes);            
+        $Iteration->set_resume($Resumes);
         $Resumes = [];
         $ali_lines = [];
         push(@$Iterations,$Iteration);
@@ -135,12 +135,12 @@ sub FillFeaturesFromTextOutput {
 
 sub TreatAlignment {
   my $lines = shift;
-  
+
   my ($name,$desc,$num_dom) = ("","","");
   my $all_alignments = {};
   my $alignments   = {};
   foreach my $line (@$lines){
-        
+
     next if $line  =~ m/^\s$/ || $line =~ m/\s+Alignments\s+for/;
     last if ($line =~ m/^\s+\[No\s+targets\s+detected\s+that\s+satisfy/);
     if ($line =~ s/^>>\s+// || $line =~ m/^Internal\s+pipeline\s+statistics/) {
@@ -196,7 +196,7 @@ sub TreatAlignment {
 
 sub AddAliToResume {
   my ($all_alignments,$Resumes) = @_;
-  
+
   print "Warning: Number of resume != Number of alignments\n" if (scalar(@$Resumes)) != scalar (keys %$all_alignments);
   foreach my $Resume (@$Resumes) {
     my $SeqIdAndDesc =  $Resume->get_SeqIdAndDesc();
