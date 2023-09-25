@@ -149,7 +149,7 @@ Available options :
               together to form a hypothetical protein. When this size is bigger,
               the gap can not be considered as an intron and the multiple ORFs
               form multiple hypothetical proteins.
-              Default: 3000
+              Default: 5000
 
     --mines, --minexonsize   Minimum exon size
               This option allows the user to modify the default minimum exon
@@ -314,7 +314,7 @@ sub FillOption {
    $self->set_orfOVgene (200);
    $self->set_orf (1);
    $self->set_matrix ("BLOSUM62");         
-   $self->set_maxintronsize (4000);
+   $self->set_maxintronsize (5000);
    $self->set_minintronsize (142);
    $self->set_minexonsize (3);  
    $self->set_ext_config ($CONFIGFILE);
