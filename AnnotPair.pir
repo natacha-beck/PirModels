@@ -49,6 +49,10 @@ IdORF                   single          string          A string in order to ide
 HMMlen                  single          int4            Lenght of HMMmodel.
 isDup                   single          int4            Indication for possible duplication
 HMMmatch                single          string          Indicate match of HMMmodel
+SimiStart               single          int4            Indicate start position def by similarity (used by gene id by HMM only)
+SimiStartInAA           single          int4            Indicate start position defined by simalarity in AA according to ORF start
+posHMMmatch             single          string          Indicate positions (in nt position) of HMMmodel match
+allposHMMmatch          array           string          Indicate all positions (in nt position) of HMMmodel match
 containStruc            single          int4            1 if contain particular structure (e.g: dpo or rpo) else 0
 
 - EndFieldsTable
