@@ -39,6 +39,7 @@ tmpdir                    single  string              Define the temporary work 
 light                     single  int4                Don't run HMMer for all not found gene and don't seartch endonuclease
 sqnformat                 single  int4                If set perform mf -> sqn conversion
 tblformat                 single  int4                If set create the tbl output
+gbkformat                 single  int4                If set create the gbk output
 prm                       single  int4                Define if prot.prm file must be used or not.
 shortrangestartupstream   single  int4                The range of the upstream start codon (used in a 1st pass)
 shortrangestartdownstream single  int4                The range of the downstream start codon (used in a 1st pass)
@@ -212,6 +213,8 @@ Available options :
     --sqn     Produce a sqn format file. Default: false.
 
     --tbl     Generate a tbl file. Default: false.
+
+    --gbk     Generate a gbk file. Default: false.
 
     --T       Define the temporary work directory.
 
@@ -390,6 +393,7 @@ sub FillOption {
                          "light"                       => \$opts{'light'},               # light version don't search for endo and for all gene
                          "sqnformat"                   => \$opts{'sqn'},                 # Convert mf -> sqn
                          "tblformat"                   => \$opts{'tbl'},                 # Create a tbl file
+                         "gbkformat"                   => \$opts{'gbk'},                 # Create a gbk file
                          "T:s"                         => \$opts{'T'},                   # tmp dir
                          "motfile:s"                   => \$opts{'motfile'},             # The path of .motsearch.pat
                          "lvlmot:i"                    => \$opts{'lvlmot'},              # 0,1 or 2 indicate lvl of motifs identification
@@ -522,8 +526,9 @@ sub FillOption {
        }
    }
 
-   $self->set_light (1)   if defined ($opts{'light'});
+   $self->set_light (1)     if defined ($opts{'light'});
    $self->set_sqnformat (1) if defined ($opts{'sqn'});
+   $self->set_gbkformat (1) if defined ($opts{'gbk'});
    $self->set_tblformat (1) if defined ($opts{'tbl'});
 
 
