@@ -54,6 +54,7 @@ SimiStartInAA           single          int4            Indicate start position 
 posHMMmatch             single          string          Indicate positions (in nt position) of HMMmodel match
 allposHMMmatch          array           string          Indicate all positions (in nt position) of HMMmodel match
 containStruc            single          int4            1 if contain particular structure (e.g: dpo or rpo) else 0
+matchEndo               single          int4            Indicate if ORF match with endonuclease
 
 - EndFieldsTable
 
