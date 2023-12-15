@@ -25,6 +25,7 @@ all_possible_start      hash    string              List of possible start
 similar_prot            single  string              Name protein that match with BLAST
 notes                   array   string              An array of not that should be added on the startline
 posHMMmatch             single  string              Indicate positions (in nt position) of HMMmodel match
+allposHMMmatch          array   string              Indicate all positions (in nt position) of HMMmodel match
 matchEndo               single  int4                Indicate if ORF match with endonuclease
 isLong                  single  int4                Indicate if ORF is long
 
