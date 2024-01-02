@@ -20,6 +20,7 @@ blast2                    single  int4                Parameter for blast in ann
 help                      single  int4                A boolean for displaying some help (-h option)
 masterfile                single  string              The masterfile name. (default option)
 minlenemptyorf            single  int4                Minimum length for keeping empty ORF (non corresponding ORF)
+endolen                   single  int4                Minimum length for keeping endo ORF
 overlappingcutoff         single  int4                A value between 0 and 100 allowing overlapping
 orfOVorf                  single  int4                A value in amino acid
 orfOVgene                 single  int4                A value in amino acid
@@ -86,6 +87,11 @@ Available options :
               It will instead appear in the Masterfile as ncorf (non
               corresponding ORF).
               Default: 300nt
+
+    --endolen  endonuclease minimum length
+            This option allows the users to supply the cutoff value for an
+            ORF (in nuceotide) they must be multiple of 3, for endonuclease.
+            Default: 210nt
 
     --ext_config
              A file used in order to call external programs.
@@ -333,6 +339,7 @@ sub FillOption {
    $self->set_debug (0);
    $self->set_prm(0);
    $self->set_minlenemptyorf (300);  # in nt
+   $self->set_endolen (210);         # in nt
    $self->set_overlappingcutoff  (40);
    $self->set_orfOVorf  (300);
    $self->set_orfOVgene (200);
@@ -374,6 +381,7 @@ sub FillOption {
                          "d"                           => \$opts{'d'},
                          "emptyorflen:i"               => \$opts{'minlenemptyorf'},      # The minimum empty length for an ORF
                          "el:i"                        => \$opts{'minlenemptyorf'},      # The minimum empty length for an ORF
+                         "endolen:i"                   => \$opts{'endolen'},             # The minimum endo  length for an ORF
                          "overlapcut:f"                => \$opts{'overlapcut'},          # A value between 0 and 100 : overlapping percent cutoff
                          "oc:f"                        => \$opts{'overlapcut'},          # A value between 0 and 100 : overlapping percent cutoff
                          "orfOVorf:f"                  => \$opts{'orfOVorf'},            # Length in amino acid
@@ -460,31 +468,40 @@ sub FillOption {
        $self->set_lvlintron ($opts{'lvlintron'});
    }
 
-   ####parameters
-   if (defined($opts{'flip2'})) {
-       if ($opts{'flip2'} <= 0) { # if the option is not given
-           print "ORF minimum len size (minorflen) not given/allowed in command line\n";
-       }
-       else {
-           $self->set_flip2 ($opts{'flip2'});
-       }
-   }
-   if (defined($opts{'blast2'})) {
-       if ($opts{'blast2'} <= 0) { # if the option is not given
-           print "Blast evalue cutoff not given/allowed in command line\n";
-       }
-       else {
-           $self->set_blast2 ($opts{'blast2'});
-       }
-   }
-   if (defined($opts{'minlenemptyorf'})) {
-       if ($opts{'minlenemptyorf'} <= 0) { # if the option is not given
-           print "Minimum empty ORF len not given/allowed in command line\n";
-       }
-       else {
-           $self->set_minlenemptyorf ($opts{'minlenemptyorf'});
-       }
-   }
+    ####parameters
+    if (defined($opts{'flip2'})) {
+        if ($opts{'flip2'} <= 0) { # if the option is not given
+            print "ORF minimum len size (minorflen) not given/allowed in command line\n";
+        }
+        else {
+            $self->set_flip2 ($opts{'flip2'});
+        }
+    }
+    if (defined($opts{'blast2'})) {
+        if ($opts{'blast2'} <= 0) { # if the option is not given
+            print "Blast evalue cutoff not given/allowed in command line\n";
+        }
+        else {
+            $self->set_blast2 ($opts{'blast2'});
+        }
+    }
+    if (defined($opts{'minlenemptyorf'})) {
+        if ($opts{'minlenemptyorf'} <= 0) { # if the option is not given
+            print "Minimum empty ORF len not given/allowed in command line\n";
+        }
+        else {
+            $self->set_minlenemptyorf ($opts{'minlenemptyorf'});
+        }
+    }
+    if (defined($opts{'endolen'})) {
+        if ($opts{'endolen'} <= 0) { # if the option is not given
+            print "Minimum endo len not given/allowed in command line\n";
+        }
+        else {
+            $self->set_endolen ($opts{'endolen'});
+        }
+    }
+
 
    $self->set_overlappingcutoff ($opts {'overlapcut'}) if defined($opts{'overlapcut'}) ; # 0 is allowed
    $self->set_orfOVorf  ($opts {'orfOVorf'})  if defined($opts{'orfOVorf'}) ; # 0 is allowed
