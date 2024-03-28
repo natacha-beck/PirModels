@@ -15,7 +15,7 @@ genetic                   single  int4                A number representing the 
 debug                     single  int4                A boolean displaying step by step, the programme process (-d option)
 logfile                   single  string              A string containig the logfile (-l option)
 islogfile                 single  int4                A boolean saying if yes or not there is a logfile
-flip2                     single  int4                Parameter for flip in annotation (-3 option)
+esl2                      single  int4                Parameter for esl in annotation (-3 option)
 blast2                    single  int4                Parameter for blast in annotation (-4 option)
 help                      single  int4                A boolean for displaying some help (-h option)
 masterfile                single  string              The masterfile name. (default option)
@@ -46,6 +46,8 @@ shortrangestartupstream   single  int4                The range of the upstream 
 shortrangestartdownstream single  int4                The range of the downstream start codon (used in a 1st pass)
 rangestartupstream        single  int4                The range of the upstream start codon
 rangestartdownstream      single  int4                The range of the downstream start codon
+eslstrand                 single  string              The strand of the sequence (watson, crick)
+
 
 - EndFieldsTable
 
@@ -160,7 +162,7 @@ Available options :
               together to form a hypothetical protein. When this size is bigger,
               the gap can not be considered as an intron and the multiple ORFs
               form multiple hypothetical proteins.
-              Default: 5000
+              Default: 5500
 
     --mines, --minexonsize   Minimum exon size
               This option allows the user to modify the default minimum exon
@@ -176,7 +178,7 @@ Available options :
 
     --minorflen   minumum ORF length
               This option allows the user to choose the size of the minumum ORFs
-              (in amino acids) that are produced using Flip. This value must be
+              (in amino acids) that are produced using Esl-translate. This value must be
               an integer.
               Default: 40
 
@@ -257,6 +259,11 @@ Available options :
               The range of the downstream start codon.
               Default: 3aa
 
+    --eslstrand
+                The strand of the sequence.
+                Default: None (both strands are searched)
+                Options: watson, crick
+
 USAGE_TEXT
 
      return $USAGE;
@@ -334,7 +341,7 @@ sub FillOption {
    $self->set_genetic (1);
    $self->set_insertion (10);
    $self->set_logfile ("");
-   $self->set_flip2 (40);
+   $self->set_esl2 (40);
    $self->set_blast2 ("1e-10");
    $self->set_debug (0);
    $self->set_prm(0);
@@ -345,7 +352,7 @@ sub FillOption {
    $self->set_orfOVgene (200);
    $self->set_orf (1);
    $self->set_matrix ("BLOSUM62");
-   $self->set_maxintronsize (5000);
+   $self->set_maxintronsize (5500);
    $self->set_minintronsize (142);
    $self->set_minexonsize (3);
    $self->set_ext_config ($CONFIGFILE);
@@ -358,57 +365,59 @@ sub FillOption {
    $self->set_shortrangestartdownstream(1);
    $self->set_rangestartupstream(10);
    $self->set_rangestartdownstream(3);
+   $self->set_eslstrand(0);
 
     ######  THEN FILL WITH LINE COMMAND OPTION ############
 
-   my %opts;                                                                        #  Hash array for storing options
-   my %optioncommand = ( "help"                        => \&ExitWithUsage,               # Exit the function with the usage
+   my %opts;                                                                                  #  Hash array for storing options
+   my %optioncommand = ( "help"                        => \&ExitWithUsage,                    # Exit the function with the usage
                          "h"                           => \&ExitWithUsage,
-                         "outputfile:s"                => \$opts{'o'},                   # Give an inputfile
+                         "outputfile:s"                => \$opts{'o'},                        # Give an inputfile
                          "o:s"                         => \$opts{'o'},
-                         "pepdirectory:s@"             => \$opts{'p'},                   # Give a pepdirectory
+                         "pepdirectory:s@"             => \$opts{'p'},                        # Give a pepdirectory
                          "p:s@"                        => \$opts{'p'},
-                         "genetic:i"                   => \$opts{'g'},                   # Give a genetic code
+                         "genetic:i"                   => \$opts{'g'},                        # Give a genetic code
                          "g:i"                         => \$opts{'g'},
-                         "insertion:f"                 => \$opts{'insertion'},           # The minimum insetion size for report
+                         "insertion:f"                 => \$opts{'insertion'},                # The minimum insetion size for report
                          "i:f"                         => \$opts{'insertion'},
-                         "logfile:s"                   => \$opts{'l'},                   # Give a logfile
+                         "logfile:s"                   => \$opts{'l'},                        # Give a logfile
                          "l:s"                         => \$opts{'l'},
                          "blast:f"                     => \$opts{'blast2'},
-                         "minorflen:f"                 => \$opts{'flip2'},
-                         "debug"                       => \$opts{'d'},                   # Debug Mode
-                         "prm"                         => \$opts{'prm'},                 # use or not prm file
+                         "minorflen:f"                 => \$opts{'esl2'},
+                         "debug"                       => \$opts{'d'},                        # Debug Mode
+                         "prm"                         => \$opts{'prm'},                      # use or not prm file
                          "d"                           => \$opts{'d'},
-                         "emptyorflen:i"               => \$opts{'minlenemptyorf'},      # The minimum empty length for an ORF
-                         "el:i"                        => \$opts{'minlenemptyorf'},      # The minimum empty length for an ORF
-                         "endolen:i"                   => \$opts{'endolen'},             # The minimum endo  length for an ORF
-                         "overlapcut:f"                => \$opts{'overlapcut'},          # A value between 0 and 100 : overlapping percent cutoff
-                         "oc:f"                        => \$opts{'overlapcut'},          # A value between 0 and 100 : overlapping percent cutoff
-                         "orfOVorf:f"                  => \$opts{'orfOVorf'},            # Length in amino acid
-                         "orfOVgene:f"                 => \$opts{'orfOVgene'},           # Length in amino acid
-                         "norf"                        => \$opts{'norf'},                # A value for non showing orfs
-                         "matrix:s"                    => \$opts{'matrix'},              # permit the display of all Orf
-                         "maxintronsize:f"             => \$opts{'maxintronsize'},       # The maximum intron size allowed
-                         "maxis:f"                     => \$opts{'maxintronsize'},       # The maximum intron size allowed
-                         "minintronsize:f"             => \$opts{'minintronsize'},       # The minimum intron size allowed
-                         "minis:f"                     => \$opts{'minintronsize'},       # The minimum intron size allowed
-                         "minexonsize:f"               => \$opts{'minexonsize'},         # The minimum exon size allowed
-                         "mines:f"                     => \$opts{'minexonsize'},         # The minimum exon size allowed
-                         "ext_config:s"                => \$opts{'ext_config'},          # The Path of ext_config
-                         "ext_select:s"                => \$opts{'ext_select'},          # The list of genes
-                         "lvlintron:i"                 => \$opts{'lvlintron'},           # 1 or 2 indicate lvl of introns identification
-                         "partial"                     => \$opts{'partial'},             # This will cause mfannot to only run a subset of all its built-in analysis
-                         "light"                       => \$opts{'light'},               # light version don't search for endo and for all gene
-                         "sqnformat"                   => \$opts{'sqn'},                 # Convert mf -> sqn
-                         "tblformat"                   => \$opts{'tbl'},                 # Create a tbl file
-                         "gbkformat"                   => \$opts{'gbk'},                 # Create a gbk file
-                         "T:s"                         => \$opts{'T'},                   # tmp dir
-                         "motfile:s"                   => \$opts{'motfile'},             # The path of .motsearch.pat
-                         "lvlmot:i"                    => \$opts{'lvlmot'},              # 0,1 or 2 indicate lvl of motifs identification
+                         "emptyorflen:i"               => \$opts{'minlenemptyorf'},           # The minimum empty length for an ORF
+                         "el:i"                        => \$opts{'minlenemptyorf'},           # The minimum empty length for an ORF
+                         "endolen:i"                   => \$opts{'endolen'},                  # The minimum endo  length for an ORF
+                         "overlapcut:f"                => \$opts{'overlapcut'},               # A value between 0 and 100 : overlapping percent cutoff
+                         "oc:f"                        => \$opts{'overlapcut'},               # A value between 0 and 100 : overlapping percent cutoff
+                         "orfOVorf:f"                  => \$opts{'orfOVorf'},                 # Length in amino acid
+                         "orfOVgene:f"                 => \$opts{'orfOVgene'},                # Length in amino acid
+                         "norf"                        => \$opts{'norf'},                     # A value for non showing orfs
+                         "matrix:s"                    => \$opts{'matrix'},                   # permit the display of all Orf
+                         "maxintronsize:f"             => \$opts{'maxintronsize'},            # The maximum intron size allowed
+                         "maxis:f"                     => \$opts{'maxintronsize'},            # The maximum intron size allowed
+                         "minintronsize:f"             => \$opts{'minintronsize'},            # The minimum intron size allowed
+                         "minis:f"                     => \$opts{'minintronsize'},            # The minimum intron size allowed
+                         "minexonsize:f"               => \$opts{'minexonsize'},              # The minimum exon size allowed
+                         "mines:f"                     => \$opts{'minexonsize'},              # The minimum exon size allowed
+                         "ext_config:s"                => \$opts{'ext_config'},               # The Path of ext_config
+                         "ext_select:s"                => \$opts{'ext_select'},               # The list of genes
+                         "lvlintron:i"                 => \$opts{'lvlintron'},                # 1 or 2 indicate lvl of introns identification
+                         "partial"                     => \$opts{'partial'},                  # This will cause mfannot to only run a subset of all its built-in analysis
+                         "light"                       => \$opts{'light'},                    # light version don't search for endo and for all gene
+                         "sqnformat"                   => \$opts{'sqn'},                      # Convert mf -> sqn
+                         "tblformat"                   => \$opts{'tbl'},                      # Create a tbl file
+                         "gbkformat"                   => \$opts{'gbk'},                      # Create a gbk file
+                         "T:s"                         => \$opts{'T'},                        # tmp dir
+                         "motfile:s"                   => \$opts{'motfile'},                  # The path of .motsearch.pat
+                         "lvlmot:i"                    => \$opts{'lvlmot'},                   # 0,1 or 2 indicate lvl of motifs identification
                          "shortrangestartupstream:i"   => \$opts{'shortrangestartupstream'},  # The range of the upstream start codon
                          "shortrangestartdownstream:i" => \$opts{'shortrangestartdownstream'},# The range of the downstream start codon
-                         "rangestartupstream:i"        => \$opts{'rangestartupstream'},  # The range of the upstream start codon
-                         "rangestartdownstream:i"      => \$opts{'rangestartdownstream'} # The range of the downstream start codon
+                         "rangestartupstream:i"        => \$opts{'rangestartupstream'},       # The range of the upstream start codon
+                         "rangestartdownstream:i"      => \$opts{'rangestartdownstream'},     # The range of the downstream start codon
+                         "eslstrand:s"                 => \$opts{'eslstrand'}                 # The strand of the sequence (watson || crick)
                        );
    GetOptions (%optioncommand);                                                     # Execute the command and fill %opts
 
@@ -469,12 +478,12 @@ sub FillOption {
    }
 
     ####parameters
-    if (defined($opts{'flip2'})) {
-        if ($opts{'flip2'} <= 0) { # if the option is not given
+    if (defined($opts{'esl2'})) {
+        if ($opts{'esl2'} <= 0) { # if the option is not given
             print "ORF minimum len size (minorflen) not given/allowed in command line\n";
         }
         else {
-            $self->set_flip2 ($opts{'flip2'});
+            $self->set_esl2 ($opts{'esl2'});
         }
     }
     if (defined($opts{'blast2'})) {
@@ -577,6 +586,15 @@ sub FillOption {
 
     if (defined $opts{'rangestartdownstream'}) {
        $self->set_rangestartdownstream($opts{'rangestartdownstream'});
+    }
+
+    if (defined $opts{'eslstrand'}) {
+        if ($opts{'eslstrand'} ne "watson" and $opts{'eslstrand'} ne "crick") {
+            print "Strand not allowed\n";
+        }
+        else {
+            $self->set_eslstrand($opts{'eslstrand'});
+        }
     }
 
    ###searching for others
